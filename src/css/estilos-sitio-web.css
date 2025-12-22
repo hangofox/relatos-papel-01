@@ -15,16 +15,84 @@ body {
   text-align: center;/*Alineación del texto.*/
   padding: 30px 20px;/*Borde del encabezado (arriba, derecho).*/
 }
-
-/* ----- LOGO: ----- */
-.logo {
-  width: 289px;/*Anchura.*/
-  height: 305px;/*Altura.*/
-  background-image:url(../imagenes/logo-relatos-papel.png);/*Ruta del logo del sitio web.*/
-  background-size:100% 100%;/*Tamaño de expansión de la imagen de fondo tanto en altura y ancho al 100%.*/
-  background-position:center;/*Centralizacion de la imagen de fondo.*/
-  background-repeat:no-repeat;/*Propiedad para que no se repita la imagen de fondo.*/
-  border-radius: 0;/*Nivel de borde redondeado.*/
+.tabla-cabezote {
+  background-color: #FFFFFF;/*Color del fondo.*/
+  
+  /* ----- LOGO: ----- */
+  .logo {
+    width: 130px;/*Anchura.*/
+    height: 130px;/*Altura.*/
+    background-image:url(../imagenes/logo-relatos-papel.png);/*Ruta del logo del sitio web.*/
+    background-size:100% 100%;/*Tamaño de expansión de la imagen de fondo tanto en altura y ancho al 100%.*/
+    background-position:center;/*Centralizacion de la imagen de fondo.*/
+    background-repeat:no-repeat;/*Propiedad para que no se repita la imagen de fondo.*/
+    border-radius: 0;/*Nivel de borde redondeado.*/
+  }
+  /* ----- TITULO SITIO WEB: ----- */
+  .titulo-sitio-web {
+    color: #000000;/*Color del texto.*/
+    text-align: left;/*Alineación del texto.*/
+    font-size: 15px;/*Tamaño del texto.*/
+    padding: 15% 5px;/*Borde del texto (arriba, izquierdo).*/
+  }
+  /* ----- HIPERVINCULO MENU SUPERIOR: ----- */
+  .opcion-menu-superior {
+    color: #000000;/*Color del texto.*/
+    text-align: left;/*Alineación del texto.*/
+    font-size: 15px;/*Tamaño del texto.*/
+	padding: 15% 5px;/*Borde del texto (arriba, izquierdo).*/
+    
+    /*ESPECÍFICACIONES DE LOS HIPERVINCULOS (COLORES Y RESALTADOS):*/
+    a {/*HIPERVENCULO EN ESTADO NORMAL SIN OPRIMIR.*/
+      text-decoration: none;/*DECORACIÓN DE LA LETRA DEL TEXTO (TACHADO Y SUBRAYADO).*/
+      color: #000000;/*COLOR DE LETRA DEL TEXTO.*/
+      font-family: Arial, Helvetica, sans-serif;/*TIPO DE LETRA DEL TEXTO.*/
+      font-size: 15px;/*0.8em;*//*TAMAÑO DE LETRA DEL TEXTO.*/
+      font-weight: normal;/*NEGRILLA DE LETRA DEL TEXTO.*/
+    }
+    a:link {/*HIPERVINCULO SIN OPRIMIR.*/
+      text-decoration: none;/*DECORACIÓN DE LA LETRA DEL TEXTO (TACHADO Y SUBRAYADO).*/
+      color: #000000;/*COLOR DE LETRA DEL TEXTO.*/
+      /*font-family: Arial, Helvetica, sans-serif;/*TIPO DE LETRA DEL TEXTO.*/
+      /*font-size: 15px;/*TAMAÑO DE LETRA DEL TEXTO.*/
+      /*font-weight: normal;/*NEGRILLA DE LETRA DEL TEXTO.*/
+      cursor: pointer;/*ACTIVACIÓN DE CURSOR AL SOBREPONER EL MOUSE SOBRE EL HIPERVINCULO.*/
+    }
+    a:visited {/*HIPERVINCULO VISITADO.*/
+      text-decoration: none;/*DECORACIÓN DE LA LETRA DEL TEXTO (TACHADO Y SUBRAYADO).*/
+      color: #000000;/*COLOR DE LETRA DEL TEXTO.*/
+      /*font-family: Arial, Helvetica, sans-serif;/*TIPO DE LETRA DEL TEXTO.*/
+      /*font-size: 15px;/*TAMAÑO DE LETRA DEL TEXTO.*/
+      /*font-weight: normal;/*NEGRILLA DE LETRA DEL TEXTO.*/
+      cursor: pointer;/*ACTIVACIÓN DE CURSOR AL SOBREPONER EL MOUSE SOBRE EL HIPERVINCULO.*/
+    }
+    a:hover {/*HIPERVINCULO CON CURSOR POR ENCIMA.*/
+      text-decoration: none;/*DECORACIÓN DE LA LETRA DEL TEXTO (TACHADO Y SUBRAYADO).*/
+      color: #FF0000;/*COLOR DE LETRA DEL TEXTO.*/
+      /*font-family: Arial, Helvetica, sans-serif;/*TIPO DE LETRA DEL TEXTO.*/
+      /*font-size: 15px;/*TAMAÑO DE LETRA DEL TEXTO.*/
+      /*font-weight: normal;/*NEGRILLA DE LETRA DEL TEXTO.*/
+      cursor: pointer;/*ACTIVACIÓN DE CURSOR AL SOBREPONER EL MOUSE SOBRE EL HIPERVINCULO.*/
+    }
+    a:active {/*HIPERVINCULO OPRIMIDO.*/
+      text-decoration: none;/*DECORACIÓN DE LA LETRA DEL TEXTO (TACHADO Y SUBRAYADO).*/
+      color:none;/*COLOR DE LETRA DEL TEXTO.*/
+      /*font-family: Arial, Helvetica, sans-serif;/*TIPO DE LETRA DEL TEXTO.*/
+      /*font-size: 15px;/*TAMAÑO DE LETRA DEL TEXTO.*/
+      /*font-weight: normal;/*NEGRILLA DE LETRA DEL TEXTO.*/
+      cursor: pointer;/*ACTIVACIÓN DE CURSOR AL SOBREPONER EL MOUSE SOBRE EL HIPERVINCULO.*/
+    }
+    
+    .icono-carrito-compras {
+	  width: 50px;/*Anchura.*/
+      height: 50px;/*Altura.*/
+      background-image:url(../imagenes/icono-carrito_compras-01.png);/*Ruta del logo del sitio web.*/
+      background-size:100% 100%;/*Tamaño de expansión de la imagen de fondo tanto en altura y ancho al 100%.*/
+      background-position:center;/*Centralizacion de la imagen de fondo.*/
+      background-repeat:no-repeat;/*Propiedad para que no se repita la imagen de fondo.*/
+      border-radius: 0;/*Nivel de borde redondeado.*/
+	}
+  }
 }
 
 /* ----- PIE DE PÁGINA ----- */
