@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+/*CUERPO DEL SITIO WEB:*/
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;/*Fuente del texto.*/
+  margin: 0;/*Margen del sitio web.*/
+  background-color: #999999;/*Color del fondo.*/
+  color: #333333;/*Color del texto.*/
+}
+
+/* ----- CABECERA: ----- */
+.header {
+  background-color: #1E73BE;/*Color del fondo.*/
+  color: white;/*Color del texto.*/
+  text-align: center;/*Alineación del texto.*/
+  padding: 30px 20px;/*Borde del encabezado (arriba, derecho).*/
+}
+
+/* ----- LOGO: ----- */
+.logo {
+  width: 289px;/*Anchura.*/
+  height: 305px;/*Altura.*/
+  background-image:url(../imagenes/logo-relatos-papel.png);/*Ruta del logo del sitio web.*/
+  background-size:100% 100%;/*Tamaño de expansión de la imagen de fondo tanto en altura y ancho al 100%.*/
+  background-position:center;/*Centralizacion de la imagen de fondo.*/
+  background-repeat:no-repeat;/*Propiedad para que no se repita la imagen de fondo.*/
+  border-radius: 0;/*Nivel de borde redondeado.*/
+}
+
+/* ----- PIE DE PÁGINA ----- */
+.pie-pagina {/*Clase creada para el pie de página.*/
+  background-color: #1E73BE;/*Color del fondo.*/
+  color: white;/*Color del texto.*/
+  text-align: center;/*Alineación del texto.*/
+  padding: 15px;/*Borde del pie de página (arriba).*/
+  font-size: 0.9em;/*Tamaño del texto.*/
+}
