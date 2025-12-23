@@ -1,11 +1,12 @@
 import { Navbar } from "../components/Navbar";
 import { RecRCom } from "../components/RecRCom";
+import { CategRot } from "../components/CategRot";
 import { Footer } from "../components/Footer";
 import "../css/estilos-sitio-web.css";
 
 export const Home = () => {
   return (
-    <table width="100%" border="1" align="center" cellPadding="0" cellSpacing="0">
+    <table width="100%" border="0" align="center" cellPadding="0" cellSpacing="0">
       <tbody>
         <tr>
           <td>
@@ -18,7 +19,9 @@ export const Home = () => {
           </td>
         </tr>
         <tr>
-          <td>CUERPO.</td>
+          <td>
+            <CategRot />
+          </td>
         </tr>
         <tr>
           <td>

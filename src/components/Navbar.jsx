@@ -2,7 +2,7 @@ import "../css/estilos-sitio-web.css";
 
 export const Navbar = () => {
   return (
-    <table width="100%" border="0" align="center" cellPadding="0" cellSpacing="0" className="tabla-cabezote">
+    <table width="100%" border="0" align="center" cellPadding="0" cellSpacing="0" class="tabla-cabezote">
       <tbody>
         <tr valign="top">
           <td width="10%">
@@ -17,12 +17,12 @@ export const Navbar = () => {
           </td>
           <td width="18%">
             <div class="opcion-menu-superior">
-               <a href="#" title="Inicio." target="_self"><u>Inicio.</u></a>
+               <a href="/" title="Inicio." target="_self"><u>Inicio.</u></a>
             </div>
           </td>
           <td width="18%">
             <div class="opcion-menu-superior">
-               <a href="#" title="Búsqueda." target="_self">Búsqueda.</a>
+               <a href="/search" title="Búsqueda." target="_self">Búsqueda.</a>
             </div>
           </td>
           <td width="18%">

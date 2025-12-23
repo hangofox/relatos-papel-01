@@ -2,7 +2,7 @@ import "../css/estilos-sitio-web.css";
 
 export const RecRCom = () => {
   return (
-    <table width="100%" border="0" align="center" cellPadding="0" cellSpacing="0" className="tabla-recomendaciones-comunidad-lectores">
+    <table width="100%" border="0" align="center" cellPadding="0" cellSpacing="0" class="tabla-recomendaciones-comunidad-lectores">
       <tbody>
         <tr valign="top">
           <td width="60%">
