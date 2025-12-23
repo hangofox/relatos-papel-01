@@ -92,6 +92,11 @@ body {
       background-repeat:no-repeat;/*Propiedad para que no se repita la imagen de fondo.*/
       border-radius: 0;/*Nivel de borde redondeado.*/
 	}
+	/*EFECTO HOVER DEL ICONO DEL CARRITO DE COMPRAS:*/
+    .icono-carrito-compras:hover {
+      filter: brightness(0) saturate(100%) invert(14%) sepia(98%) saturate(7493%) hue-rotate(0deg) brightness(101%) contrast(119%);
+      transform: scale(1.05);
+    }
   }
 }
 
