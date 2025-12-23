@@ -7,7 +7,7 @@ export const Footer = () => {
         <tr valign="top">
           <td width="100%">
             <div class="titulo-footer">
-               Grupo 11 - MISSI UNIR.<br />Todos los Derechos Reservados - Bogotá DC, @ Colombia / Quito, @ Ecuador 2026.
+               Grupo 11 - MISSI UNIR.<br />Todos los Derechos Reservados - Bogotá DC, @ Colombia / Quito DC, @ Ecuador 2026.
             </div>
           </td>
         </tr>

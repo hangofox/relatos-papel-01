@@ -32,7 +32,7 @@ export const Navbar = () => {
           </td>
           <td width="10%">
             <div class="opcion-menu-superior">
-               <a href="#" title="Carrito de Compras." target="_self">
+               <a href="/shopping-cart" title="Carrito de Compras." target="_self">
                  <div class="icono-carrito-compras">
                     &nbsp;
                  </div>

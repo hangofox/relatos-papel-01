@@ -1,9 +1,9 @@
 import { Navbar } from "../components/Navbar";
-import { BooksList } from "../components/BooksList";
+import { ShopingList } from "../components/ShopingList";
 import { Footer } from "../components/Footer";
 import "../css/estilos-sitio-web.css";
 
-export const Search = () => {
+export const ShoppingCart = () => {
   return (
     <table width="100%" border="0" align="center" cellPadding="0" cellSpacing="0">
       <tbody>
@@ -14,7 +14,7 @@ export const Search = () => {
         </tr>
         <tr>
           <td>
-            <BooksList />
+            <ShopingList />
           </td>
         </tr>
         <tr>

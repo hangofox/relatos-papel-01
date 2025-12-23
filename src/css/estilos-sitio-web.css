@@ -83,16 +83,16 @@ body {
       cursor: pointer;/*ACTIVACIÓN DE CURSOR AL SOBREPONER EL MOUSE SOBRE EL HIPERVINCULO.*/
     }
     
-	/*ICONO CARRITO DE COMPRAS:*/
+    /*ICONO CARRITO DE COMPRAS:*/
     .icono-carrito-compras {
-	  width: 50px;/*Anchura.*/
+      width: 50px;/*Anchura.*/
       height: 50px;/*Altura.*/
       background-image:url(../imagenes/icono-carrito_compras-01.png);/*Ruta del icono del carrito de compras.*/
       background-size:100% 100%;/*Tamaño de expansión de la imagen de fondo tanto en altura y ancho al 100%.*/
       background-position:center;/*Centralizacion de la imagen de fondo.*/
       background-repeat:no-repeat;/*Propiedad para que no se repita la imagen de fondo.*/
       border-radius: 0;/*Nivel de borde redondeado.*/
-	}
+    }
 	/*EFECTO HOVER DEL ICONO DEL CARRITO DE COMPRAS:*/
     .icono-carrito-compras:hover {
       filter: brightness(0) saturate(100%) invert(14%) sepia(98%) saturate(7493%) hue-rotate(0deg) brightness(101%) contrast(119%);
@@ -131,10 +131,30 @@ body {
 .tabla-categorias-rotadores {
   background-color: #FFFFFF;/*Color del fondo.*/
   
-  /*AREA DE CATEGORIAS Y ROTADORES::*/
+  /*AREA DE CATEGORIAS Y ROTADORES:*/
   .area-categorias-rotadores {
     width: 100%;/*Anchura.*/
     height: 300px;/*Altura.*/
+  }
+}
+
+/* ----- LISTADO DE REGISTROS: ----- */
+.tabla-listado {
+  background-color: #FFFFFF;/*Color del fondo.*/
+  
+  /*AREA DE BUSCADOR:*/
+  .area-buscador {
+    width: 100%;/*Anchura.*/
+    height: auto;/*Altura.*/
+    background-color: #000000;/*Color del fondo.*/
+    color: white;/*Color del texto.*/
+  }
+  /*AREA DE LISTADO DE REGISTROS:*/
+  .area-listado {
+    width: 100%;/*Anchura.*/
+    height: 300px;/*Altura.*/
+    background-color: #FFFFFF;/*Color del fondo.*/
+    color: #000000;/*Color del texto.*/
   }
 }
 
