@@ -36,36 +36,45 @@ footer {
 
 /*Estilos para el carrusel*/
 /* Color de las flechas */
+/* Contenedor principal de las flechas */
 .swiper-button-next, .swiper-button-prev {
-  color: white !important;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 30px 20px;
-  border-radius: 5px;
+  color: #ffffff !important; /* Blanco puro */
+  background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente */
+  width: 50px !important; /* Ancho del área del botón */
+  height: 80px !important; /* Más alto */
+  top: 40% !important; /* Centrado vertical respecto a la imagen */
+  border-radius: 4px;
   transition: all 0.3s ease;
+  opacity: 0;
+  z-index: 10;
 }
 
+/* El símbolo de la flecha */
 .swiper-button-next:after, .swiper-button-prev:after {
-  font-size: 20px !important;
+  font-size: 15px !important; /* Tamaño de la flecha */
   font-weight: bold;
+  color: white; 
 }
 
-/* Hover efecto en las tarjetas */
+/* Hover en el botón mismo */
+.swiper-button-next:hover, .swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+/* Mostrar botones al pasar el mouse sobre el carrusel */
+.swiper:hover .swiper-button-next, 
+.swiper:hover .swiper-button-prev {
+  opacity: 1;
+}
+
+/* Ajustes adicionales para las tarjetas */
 .card {
   transition: transform 0.3s ease;
   cursor: pointer;
 }
 
 .card:hover {
-  transform: scale(1.05);
-  z-index: 10;
-}
-
-/* Ocultar botones por defecto y mostrar en hover del contenedor */
-.swiper-button-next, .swiper-button-prev {
-  opacity: 0;
-}
-
-.swiper:hover .swiper-button-next, 
-.swiper:hover .swiper-button-prev {
-  opacity: 1;
+  transform: scale(1.08);
+  z-index: 20;
 }
