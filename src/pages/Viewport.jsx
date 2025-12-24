@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Home } from './Home';
 import { Search } from './Search';
-import { Navbar, Footer, Carrousel, BarTop } from '../components/Components';
+import { Navbar, Footer } from '../components/Components';
 
 export const Viewport = () => {
   return (
