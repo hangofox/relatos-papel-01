@@ -56,6 +56,11 @@ footer {
   box-sizing: border-box;
 }
 
+.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 /*Estilos para el carrusel*/
 /* Color de las flechas */
 /* Contenedor principal de las flechas */
