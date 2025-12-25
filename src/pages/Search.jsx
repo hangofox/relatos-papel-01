@@ -1,7 +1,9 @@
+import { BarTopSearch } from "../components/Components";
+
 export const Search = () => {
   return (
     <div>
-      <h1>Búsqueda</h1>
+      <BarTopSearch />
     </div>
   );
 }

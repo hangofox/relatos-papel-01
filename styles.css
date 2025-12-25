@@ -7,7 +7,7 @@
 }
 
 /*Parametrización de estilos del body*/
-body{
+body {
   margin: 0;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
@@ -25,21 +25,35 @@ footer {
 
 /*Estilos para la barra del home*/
 .barra {
-  height: 5rem;
+  height: 7rem;
   text-align: center;
   align-content: center;
   font-size: 20px;
-  font-weight: bold;
 }
 
-/*Estilos para el acceso directo a la sección de recomendaciones*/
-.recomendaciones {
+/*Fondo negro*/
+.back-black {
   background-color: black;
 }
 
-/*Estilos para el acceso directo a la comunidad*/
-.comunidad {
+/*Fondo celeste claro*/
+.back-blue {
   background-color: var(--secundary-color);
+}
+
+/*Fondo gris claro*/
+.back-gray {
+  background-color: var(--third-color);
+}
+
+/*Estilo para los campos de formularios*/
+.field {
+  font-size: 12px;
+  border-radius: 3px;
+  padding: 4px 0px;
+  border: 1px solid #ccc;
+  display: block;
+  box-sizing: border-box;
 }
 
 /*Estilos para el carrusel*/
@@ -48,17 +62,22 @@ footer {
 
 /*Estilo para el dondo más claro del carrusel */
 .carrousel {
-  background-color: var(--third-color);
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 /*Estilo para el swiper del carrusel */
-.swiper-button-next, .swiper-button-prev {
-  color: #ffffff !important; /* Blanco puro */
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo semi-transparente */
-  width: 50px !important; /* Ancho del área del botón */
-  height: 80px !important; /* Más alto */
-  top: 40% !important; /* Centrado vertical respecto a la imagen */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ffffff !important;
+  /* Blanco puro */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Fondo semi-transparente */
+  width: 50px !important;
+  /* Ancho del área del botón */
+  height: 80px !important;
+  /* Más alto */
+  top: 40% !important;
+  /* Centrado vertical respecto a la imagen */
   border-radius: 4px;
   transition: all 0.3s ease;
   opacity: 0;
@@ -66,20 +85,23 @@ footer {
 }
 
 /* El símbolo de la flecha */
-.swiper-button-next:after, .swiper-button-prev:after {
-  font-size: 15px !important; /* Tamaño de la flecha */
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 15px !important;
+  /* Tamaño de la flecha */
   font-weight: bold;
-  color: white; 
+  color: white;
 }
 
 /* Hover en el botón mismo */
-.swiper-button-next:hover, .swiper-button-prev:hover {
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
   background-color: rgba(0, 0, 0, 0.8);
   transform: scale(1.1);
 }
 
 /* Mostrar botones al pasar el mouse sobre el carrusel */
-.swiper:hover .swiper-button-next, 
+.swiper:hover .swiper-button-next,
 .swiper:hover .swiper-button-prev {
   opacity: 1;
 }
