@@ -9,9 +9,9 @@ export const BookPage = () => {
 
   return (
     <div className="mt-5">
-      <div className="row">
+      <div className="row justify-content-center">
         <div className="col-auto p-4 rounded-border back-gray">
-          <img src={book.img_url} height="200" alt="" />
+          <img src={book.img_url} height="250" alt="" />
         </div>
         <div className='col-auto'></div>
         <div className="col-6 p-4 rounded-border back-gray text-dark">
