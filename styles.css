@@ -54,7 +54,7 @@ footer {
 
 /*Estilo para los campos de formularios*/
 .field {
-  font-size: 12px;
+  font-size: 14px;
   border-radius: 3px;
   padding: 4px 0px;
   border: 1px solid #ccc;
@@ -65,6 +65,14 @@ footer {
 .active {
   font-weight: bold;
   text-decoration: underline;
+}
+
+.button-blue {
+  background-color: var(--secundary-color);
+  border-radius: 10px;
+  padding: 8px;
+  border: none;
+  font-size: 14px;
 }
 
 /*Estilos para el carrusel*/
