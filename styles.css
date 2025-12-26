@@ -24,6 +24,11 @@ footer {
   border-top: black 2px solid;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
 /*Estilos para la barra del home*/
 .barra {
   height: 7rem;
@@ -73,6 +78,7 @@ footer {
   padding: 8px;
   border: none;
   font-size: 14px;
+  color: black;
 }
 
 /*Estilos para el carrusel*/
