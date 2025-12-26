@@ -8,7 +8,6 @@
 import { useParams } from 'react-router-dom';
 import { Books } from '../data/Data';
 import { BookInfo } from '../components/Components';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const BookPage = () => {
   const { id } = useParams();

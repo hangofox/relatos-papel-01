@@ -7,6 +7,7 @@
  */
 
 import { useState } from 'react';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const BookInfo = ({book}) => {
 

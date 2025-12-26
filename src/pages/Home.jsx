@@ -13,7 +13,9 @@ export const Home = () => {
     <>
       <BarTop />
       <div className='mx-3'>
-        <Carrousel />
+        <Carrousel 
+          categories={[3,4,5]}
+        />
       </div>
     </>
   );
