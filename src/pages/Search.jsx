@@ -1,7 +1,7 @@
 /**
  * Creado por: Gabby Zapata
- * Modificado por: Hernan Nuñez
- * Fecha: 2025-12-27
+ * Modificado por: Maria Parraga, David Paez
+ * Fecha: 2025-12-28
  * Descripción: Componente que contiene la página de búsqueda funcional
  * Contiene filtros por título, autor y categoría con resultados en tiempo real
  * @returns componente Search
