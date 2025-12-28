@@ -4,7 +4,7 @@
  * Descripción: Componente que contiene la información de cada libro que se visualiza en el carrusel
  * Despliega
  * @returns componente BookCard
- */
+*/
 
 export const BookCard = ({ book }) => {
   return (

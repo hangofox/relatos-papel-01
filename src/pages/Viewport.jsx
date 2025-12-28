@@ -1,13 +1,14 @@
 /**
  * Creado por: Gabby Zapata
- * Fecha: 2025-12-24
+ * Modificado por: Hernan Nuñez
+ * Fecha: 2025-12-27
  * Descripción: Componente que contiene la vista de toda la aplicación y el manejo de rutas que renderiza solo la parte central
  * Contiene el Navbar, el Main que es el que se renderiza con las rutas y el Footer
  * @returns componente Viewport
  */
 
 import { Routes, Route } from 'react-router-dom';
-import { Home, Search, BookPage, ShoppingCartPage } from './Pages';
+import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCardPage, OrderConfirmationPage } from './Pages';
 import { Navbar, Footer } from '../components/Components';
 
 export const Viewport = () => {
@@ -21,6 +22,9 @@ export const Viewport = () => {
           <Route path="/search" element={<Search />} />
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/shopping" element={<ShoppingCartPage />} />
+          <Route path="/payment-method" element={<PaymentMethodPage />} />
+          <Route path="/credit-card-payment" element={<CreditCardPage />} />
+          <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
           {/* Ruta por defecto si el usuario se pierde */}
           <Route path="*" element={<h1>404 - No encontrado</h1>} />
         </Routes>

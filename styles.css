@@ -135,3 +135,70 @@ a {
   transform: scale(1.08);
   z-index: 20;
 }
+
+/* ========== Estilos de PaymentMethodPage.jsx ========== */
+
+/* Border PayPal - Contenedor de simulación de PayPal */
+.paypal-border {
+  border: 2px solid #003087;
+}
+
+/* Icono PayPal grande - Header de simulación PayPal */
+.paypal-icon-large {
+  font-size: 3rem;
+  color: #003087;
+}
+
+/* Título PayPal - Texto del header */
+.paypal-title {
+  color: #003087;
+}
+
+/* Botón primario PayPal - Botón de continuar login */
+.paypal-btn-primary {
+  background-color: #003087;
+  border-color: #003087;
+}
+
+/* Botón de pagar ahora PayPal - Botón de confirmación de pago */
+.paypal-btn-pay {
+  background-color: #0070ba;
+  border-color: #0070ba;
+}
+
+/* Spinner de carga - Indicador de procesamiento */
+.spinner-large {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Precio total destacado - Resumen del pedido */
+.total-price-highlight {
+  font-size: 1.3rem;
+  color: #80B6D8;
+}
+
+/* Tarjeta de método de pago - Contenedor de opciones de pago */
+.payment-method-card {
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+/* Icono PayPal mediano - Opción de método de pago */
+.paypal-icon-medium {
+  font-size: 2.5rem;
+  color: #003087;
+}
+
+/* Iconos de tarjetas - Opción de método de pago con tarjeta */
+.card-icon-medium {
+  font-size: 1.5rem;
+}
+
+/* ========== Estilos de CreditCardPage.jsx ========== */
+
+/* Precio total en pago con tarjeta - Total a pagar */
+.payment-total-price {
+  font-size: 1.5rem;
+  color: #80B6D8;
+}

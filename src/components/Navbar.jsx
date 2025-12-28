@@ -1,22 +1,42 @@
 /**
  * Creado por: Gabby Zapata
- * Fecha: 2025-12-24
+ * Modificado por: Hernan Nuñez
+ * Fecha: 2025-12-27
  * Descripción: Componente que contiene el Navbar con el logo, el nombre de la página y el menú de la aplicación
  * Contiene el objeto nav configurado con el framework de Bootstrap
  * @returns componente Navbar
  */
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Categories } from '../data/Data';
+import { useCart } from '../context/CartContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // Importaciones de React-Bootstrap
-import { Navbar as RBNavbar, Nav, NavDropdown, Container, Form, Button } from 'react-bootstrap';
+import { Navbar as RBNavbar, Nav, NavDropdown, Container, Form, Button, Badge } from 'react-bootstrap';
 
 export const Navbar = () => {
   // Solo necesitamos el estado para el menú activo
   const [activeMenu, setActiveMenu] = useState('INI');
+  // Estado para el texto de búsqueda
+  const [searchQuery, setSearchQuery] = useState('');
+  // Obtener el total de items del carrito
+  const { getTotalItems } = useCart();
+  const totalItems = getTotalItems();
+  // Navigate para la búsqueda
+  const navigate = useNavigate();
+
+  // Manejar búsqueda
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
+    } else {
+      navigate('/search');
+    }
+  };
 
   return (
     <RBNavbar expand="lg" className="bg-body-tertiary">
@@ -39,14 +59,16 @@ export const Navbar = () => {
         <RBNavbar.Collapse id="navbarSupportedContent">
           
           {/* Formulario de búsqueda */}
-          <Form className="d-flex me-auto">
+          <Form className="d-flex me-auto" onSubmit={handleSearch}>
             <Form.Control
               type="search"
               placeholder="Buscar"
               className="me-1 field"
               aria-label="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <Button className='button-blue' variant="outline-primary">Buscar</Button>
+            <Button className='button-blue' variant="outline-primary" type="submit">Buscar</Button>
           </Form>
 
           <Nav className="ms-auto">
@@ -80,8 +102,18 @@ export const Navbar = () => {
             </NavDropdown>
 
             {/* Carrito */}
-            <Nav.Link as={Link} to="/shopping" onClick={() => setActiveMenu('CAR')}>
+            <Nav.Link as={Link} to="/shopping" onClick={() => setActiveMenu('CAR')} className="position-relative">
               <i className="bi bi-cart-fill"></i>
+              {totalItems > 0 && (
+                <Badge
+                  bg="danger"
+                  pill
+                  className="position-absolute top-0 start-100 translate-middle"
+                  style={{ fontSize: '0.7rem' }}
+                >
+                  {totalItems}
+                </Badge>
+              )}
             </Nav.Link>
           </Nav>
         </RBNavbar.Collapse>
