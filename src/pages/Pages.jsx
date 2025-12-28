@@ -7,3 +7,4 @@
 export * from './Home';
 export * from './Search';
 export * from './BookPage';
+export * from './ShoppingCartPage';

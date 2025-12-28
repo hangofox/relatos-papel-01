@@ -8,65 +8,84 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Categories } from '../data/Data';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+// Importaciones de React-Bootstrap
+import { Navbar as RBNavbar, Nav, NavDropdown, Container, Form, Button } from 'react-bootstrap';
+
 export const Navbar = () => {
-  //Estado para controlar el colapso del menú
-  const [isNavCollapsed, setIsNavCollapsed] = useState(true);
-  //Controlar qué menú está activo
+  // Solo necesitamos el estado para el menú activo
   const [activeMenu, setActiveMenu] = useState('INI');
 
-  //Handler para indicar el colapso del menú
-  const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
-  //Función que implementa las dos funciones para el menú
-  const handleMenu = (collapsed, idMenu) =>{
-    setActiveMenu(idMenu);
-    setIsNavCollapsed(collapsed);
-  }
-
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        {/*TODO: Añadir un CSS para la imagen, para el tamaño y debemos revisar que el alt para personas discapasitadas funcione bien*/}
-        <img
-          src="/img/logo.png"
-          alt="Logo Relatos de Papel"
-          width="50"
-          className="d-inline-block align-text-top me-2 text-dark"
-        />
-        <Link className="navbar-brand" to="/">Librería Relatos de Papel</Link>
-        
-        {/* Botón Toggler: agregamos el evento onClick */}
-        <button 
-          className="navbar-toggler" 
-          type="button" 
-          aria-controls="navbarSupportedContent" 
-          aria-expanded={!isNavCollapsed ? true : false} 
-          aria-label="Toggle navigation"
-          onClick={handleNavCollapse}
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <RBNavbar expand="lg" className="bg-body-tertiary">
+      <Container fluid>
+        {/* Logo y Nombre */}
+        <RBNavbar.Brand as={Link} to="/" className="d-flex align-items-center">
+          <img
+            src="/img/logo.png"
+            alt="Logo Relatos de Papel"
+            width="50"
+            className="d-inline-block align-text-top me-2"
+          />
+          Librería Relatos de Papel
+        </RBNavbar.Brand>
 
-        {/* Contenedor colapsable: manejamos la clase 'show' condicionalmente */}
-        <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarSupportedContent">
-          <input class="field" type="search" placeholder="Search" aria-label="Search"/>
-          <button class="button-blue" type="submit">Search</button>
-          <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-            <li className="nav-item">
-              <Link className={activeMenu === 'INI' ? "nav-link active" : "nav-link"} to="/" onClick={() => handleMenu(true, 'INI')}>Inicio</Link>
-            </li>
-            <li className="nav-item">
-              <Link className={activeMenu === 'BUS' ? "nav-link active" : "nav-link"} to="/search" onClick={() => handleMenu(true, 'BUS')}>Categorías</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" href="#">
-                <i className="bi bi-cart-fill"></i>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+        {/* Botón hamburguesa automático */}
+        <RBNavbar.Toggle aria-controls="navbarSupportedContent" />
+
+        {/* Contenedor colapsable */}
+        <RBNavbar.Collapse id="navbarSupportedContent">
+          
+          {/* Formulario de búsqueda */}
+          <Form className="d-flex me-auto">
+            <Form.Control
+              type="search"
+              placeholder="Buscar"
+              className="me-1 field"
+              aria-label="Search"
+            />
+            <Button className='button-blue' variant="outline-primary">Buscar</Button>
+          </Form>
+
+          <Nav className="ms-auto">
+            {/* Inicio con 'as={Link}' para mantener la navegación de react-router */}
+            <Nav.Link 
+              as={Link} 
+              to="/" 
+              active={activeMenu === 'INI'}
+              onClick={() => setActiveMenu('INI')}
+            >
+              Inicio
+            </Nav.Link>
+
+            {/* Dropdown dinámico desde el array Categories */}
+            <NavDropdown 
+              title="Categorías" 
+              id="navbarDarkDropdownMenuLink"
+              active={activeMenu === 'CAT'}
+              onClick={() => setActiveMenu('CAT')}
+              menuVariant="dark"
+            >
+              {Categories.map((item, index) => (
+                <NavDropdown.Item 
+                  key={index} 
+                  as={Link} 
+                  to={`/category/${item.id_category}`}
+                >
+                  {item.name_category}
+                </NavDropdown.Item>
+              ))}
+            </NavDropdown>
+
+            {/* Carrito */}
+            <Nav.Link as={Link} to="/shopping" onClick={() => setActiveMenu('CAR')}>
+              <i className="bi bi-cart-fill"></i>
+            </Nav.Link>
+          </Nav>
+        </RBNavbar.Collapse>
+      </Container>
+    </RBNavbar>
   );
-}
+};

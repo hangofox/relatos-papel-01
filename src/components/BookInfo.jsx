@@ -66,6 +66,7 @@ export const BookInfo = ({ book }) => {
               <option value="F">Físico</option>
               <option value="D">Digital</option>
             </select>
+            <span className='small bs-danger-border-subtle'>Error</span>
           </div>
           <div className="col-lg-3 text-end">
             <label htmlFor="cantidad">Cantidad:</label>
@@ -77,7 +78,7 @@ export const BookInfo = ({ book }) => {
               name="cantidad" 
               id="cantidad" 
               value={cantidad}
-              onChange={(e)=>setCantidad(e.target)}
+              onChange={(e)=>setCantidad(e.target.value)}
             />
           </div>
         </div>

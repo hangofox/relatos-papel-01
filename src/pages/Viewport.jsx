@@ -7,7 +7,7 @@
  */
 
 import { Routes, Route } from 'react-router-dom';
-import { Home, Search, BookPage } from './Pages';
+import { Home, Search, BookPage, ShoppingCartPage } from './Pages';
 import { Navbar, Footer } from '../components/Components';
 
 export const Viewport = () => {
@@ -17,9 +17,10 @@ export const Viewport = () => {
       {/* El contenido entre Navbar y Footer cambia según la URL */}
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home categories={[3,4,5]} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/book/:id" element={<BookPage />} />
+          <Route path="/shopping" element={<ShoppingCartPage />} />
           {/* Ruta por defecto si el usuario se pierde */}
           <Route path="*" element={<h1>404 - No encontrado</h1>} />
         </Routes>

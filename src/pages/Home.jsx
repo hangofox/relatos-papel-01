@@ -6,15 +6,17 @@
  * @returns componente Home
  */
 
+import { useEffect } from 'react';
 import { Carrousel, BarTop } from '../components/Components';
 
-export const Home = () => {
+export const Home = ({categories}) => {
+
   return (
     <>
       <BarTop />
       <div className='mx-3'>
         <Carrousel 
-          categories={[3,4,5]}
+          categories={categories}
         />
       </div>
     </>
