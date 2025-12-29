@@ -7,7 +7,7 @@
  * @returns componente Search
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useEffectEvent } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Books, Categories, BooksPerCategory } from '../data/Data';
 import 'bootstrap-icons/font/bootstrap-icons.css';
@@ -15,12 +15,17 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 export const Search = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-
+  
   // Estados para los filtros
   const [searchText, setSearchText] = useState(searchParams.get('q') || '');
   const [selectedAuthor, setSelectedAuthor] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [filteredBooks, setFilteredBooks] = useState(Books);
+
+  // Actualiza searchText cuando cambia la URL
+  useEffect(() => {
+    setSearchText(searchParams.get('q') || '');
+  }, [searchParams]);
 
   // Obtener lista única de autores
   const authors = [...new Set(Books.map(book => book.author))].sort();
@@ -29,11 +34,19 @@ export const Search = () => {
   useEffect(() => {
     let result = Books;
 
-    // Filtrar por título
+  
+  //  Filtrar por título con búsqueda acumulativa por palabras (AND)
     if (searchText.trim()) {
-      result = result.filter(book =>
-        book.title.toLowerCase().includes(searchText.toLowerCase())
-      );
+      const tokens = searchText
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean);
+
+      result = result.filter(book => {
+        const title = (book.title || '').toLowerCase();
+        return tokens.every(tok => title.includes(tok)); // AND
+        // Si prefieres OR: return tokens.some(tok => title.includes(tok));
+      });
     }
 
     // Filtrar por autor
@@ -54,55 +67,6 @@ export const Search = () => {
 
   return (
     <div className="text-black">
-      {/* Barra de búsqueda */}
-      <div className="barra back-black">
-        <div className="row p-5">
-          <div className="col">
-            <input
-              type="text"
-              className="field form-control"
-              name="text_query"
-              id="text_query"
-              placeholder="Buscar por título"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-            />
-          </div>
-          <div className="col">
-            <select
-              className="field form-select"
-              name="id_autor"
-              id="id_autor"
-              value={selectedAuthor}
-              onChange={(e) => setSelectedAuthor(e.target.value)}
-            >
-              <option value="">Todos los autores</option>
-              {authors.map((author, index) => (
-                <option key={index} value={author}>
-                  {author}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="col">
-            <select
-              className="field form-select"
-              name="id_categoria"
-              id="id_categoria"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="">Todas las categorías</option>
-              {Categories.map((category) => (
-                <option key={category.id_category} value={category.id_category}>
-                  {category.name_category}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </div>
-
       {/* Resultados */}
       <div className="container py-4">
         <div className="row mb-3">
@@ -126,7 +90,7 @@ export const Search = () => {
         </div>
 
         {/* Lista de libros */}
-        <div className="row g-3">
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 gx-3 gy-4">
           {filteredBooks.length === 0 ? (
             <div className="col-12 text-center py-5">
               <i className="bi bi-search" style={{ fontSize: '3rem', color: '#80B6D8' }}></i>
@@ -135,18 +99,19 @@ export const Search = () => {
             </div>
           ) : (
             filteredBooks.map((book) => (
-              <div key={book.id_book} className="col-lg-3 col-md-4 col-sm-6">
-                <div
-                  className="card h-100"
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => navigate(`/book/${book.id_book}`)}
-                >
-                  <img
-                    src={book.img_url}
-                    className="card-img-top"
-                    alt={book.title}
-                    style={{ height: '250px', objectFit: 'cover' }}
-                  />
+              <div key={book.id_book} className="col">
+
+                    <div
+                      className="card h-100"
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/book/${book.id_book}`); }}
+                      onClick={() => navigate(`/book/${book.id_book}`)}
+                    >
+           
+                   <div className="image-box">
+                    <img src={book.img_url} alt={book.title} loading="lazy" />
+                  </div>
                   <div className="card-body d-flex flex-column">
                     <h6 className="card-title text-truncate" title={book.title}>
                       {book.title}

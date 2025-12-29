@@ -9,13 +9,14 @@
 
 import { Routes, Route } from 'react-router-dom';
 import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCardPage, OrderConfirmationPage, CategoriesPage } from './Pages';
-import { Navbar, Footer } from '../components/Components';
-
+import { Navbar, Footer} from '../components/Components';
+import { ScrollToTop } from '../components/ScrollToTop';
 export const Viewport = () => {
   return (
     <>
       <Navbar />
-      {/* El contenido entre Navbar y Footer cambia según la URL */}
+      <ScrollToTop />
+           {/* El contenido entre Navbar y Footer cambia según la URL */}
       <main>
         <Routes>
           <Route path="/" element={<Home categories={[3,4,5]} />} />

@@ -57,19 +57,31 @@ export const Navbar = () => {
 
         {/* Contenedor colapsable */}
         <RBNavbar.Collapse id="navbarSupportedContent">
+                  
           
-          {/* Formulario de búsqueda */}
-          <Form className="d-flex me-auto" onSubmit={handleSearch}>
-            <Form.Control
-              type="search"
-              placeholder="Buscar"
-              className="me-1 field"
-              aria-label="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <Button className='button-blue' variant="outline-primary" type="submit">Buscar</Button>
+         
+          <Form className="me-auto w-auto" onSubmit={handleSearch}>
+            <div className="position-relative">
+              <Form.Control
+                type="search"
+                placeholder="Buscar por titulo..."
+                aria-label="Buscar"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input-small pe-5"
+              />
+              {/* Lupa a la derecha, clickeable */}
+              <button
+                type="submit"
+                className="search-icon-btn"
+                aria-label="Buscar"
+                title="Buscar"
+              >
+                <i className="bi bi-search"></i>
+              </button>
+            </div>
           </Form>
+
 
           <Nav className="ms-auto">
             {/* Inicio con 'as={Link}' para mantener la navegación de react-router */}
