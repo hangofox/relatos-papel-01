@@ -53,7 +53,7 @@ export const Carrousel = ({ categories }) => {
             >
               {booksToShow.map((book) => (
                 <SwiperSlide
-                  key={book.id_book} // Mejor usar el id del libro que el index
+                  key={book.id_book} // Usamos el id del libro que el index
                 >
                   <BookCard book={book} />
                 </SwiperSlide>
