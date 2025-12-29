@@ -31,7 +31,7 @@ export const BookCard = ({ book }) => {
         <p className="card-text small text-secondary text-truncate">{book.author}</p>
         <button 
           type="button"
-          className='button-blue'
+          className='button-blue w-100'
           onClick={() => setClickedBook(book.id_book)}
         >
           Ver detalles

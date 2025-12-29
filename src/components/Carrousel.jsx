@@ -22,7 +22,7 @@ export const Carrousel = ({ categories }) => {
   const categoriesFiltered = Categories.filter(cat => categories.includes(cat.id_category));
 
   return (
-    <div className="container-fluid text-dark py-5 min-vh-100">
+    <div className="container-fluid text-dark py-5">
       {categoriesFiltered.map((cat) => {
 
         // --- LÓGICA DE FILTRADO PARA ESTA CATEGORÍA ESPECÍFICA ---
