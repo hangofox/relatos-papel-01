@@ -12,3 +12,4 @@ export const ScrollToTop = () => {
   }, [pathname]);           
   return null;
 };
+//prueba
