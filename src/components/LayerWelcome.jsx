@@ -6,7 +6,7 @@ export const LayerWelcome = ({ aparece }) => {
       <div className="welcome-screen">
         <div className="welcome-box">
           <h1 className="logo-text">Relatos de Papel</h1>
-          <div className="simple-spinner"></div>
+          <Spinner className="spinner-color" />
           <p className="loading-text">Abriendo las puertas...</p>
         </div>
       </div>
