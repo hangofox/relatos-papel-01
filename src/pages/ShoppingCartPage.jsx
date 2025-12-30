@@ -51,13 +51,13 @@ export const ShoppingCartPage = () => {
         <div className="col-lg-8">
           <div className="back-gray rounded-border p-4">
             {/* Encabezados de la tabla */}
-            <div className="row fw-bold pb-3 border-bottom d-none d-lg-flex">
+            <div className="row fw-bold pb-4 border-bottom d-none d-lg-flex">
               <div className="col-lg-2">Imagen</div>
               <div className="col-lg-3">Producto</div>
               <div className="col-lg-2 text-center">Precio</div>
               <div className="col-lg-3 text-center">Cantidad</div>
               <div className="col-lg-1 text-center">Subtotal</div>
-              <div className="col-lg-1 text-center">Acción</div>
+              <div className="col-lg-1 text-center"></div>
             </div>
             
             {/* Items del carrito */}
