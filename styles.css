@@ -6,6 +6,11 @@
   --back-color: #212425;
   --bar-color: #5987a3;
   --welcome-color: #3e2723;
+
+  /* Color y tipografía del botón */
+  --btn-bg: #3674B5;
+  --btn-bg-hover: #008DDA;
+  --btn-text: #ffffff;
 }
 
 /*Parametrización de estilos del body*/
@@ -90,7 +95,7 @@ a {
   text-decoration: underline;
 }
 
-.button-bbbbbbbbbbbbb {
+.button-blue {
   background-color: var(--secundary-color);
   border-radius: 5px;
   padding: 4px;
@@ -100,11 +105,8 @@ a {
 }
 
 /* Boton detalles busqueda*/
-.button-blue {
-  /* Color y tipografía */
-  --btn-bg: #3674B5;
-  --btn-bg-hover: #008DDA;
-  --btn-text: #ffffff;
+.button-bbbb {
+  
 
   background: var(--btn-bg);
   color: var(--btn-text);

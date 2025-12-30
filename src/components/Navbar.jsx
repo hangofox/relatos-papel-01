@@ -41,7 +41,7 @@ export const Navbar = () => {
   return (
     <RBNavbar expand="lg" className="custom-navbar bg-body-tertiary">
       <Container fluid>
-        {/* Logo y Nombre */}
+        {/* 1. Logo y Nombre */}
         <RBNavbar.Brand as={Link} to="/" className="d-flex align-items-center text-light">
           <img
             src="/relatos/img/logo.png"
@@ -52,13 +52,35 @@ export const Navbar = () => {
           Librería Relatos de Papel
         </RBNavbar.Brand>
 
-        {/* Botón hamburguesa automático */}
-        <RBNavbar.Toggle aria-controls="navbarSupportedContent" />
+        {/* CONTENEDOR DE ICONOS PARA MÓVIL (Orden visual) */}
+        <div className="d-flex align-items-center order-lg-last">
+          {/* 2. Carrito (FUERA del Collapse) */}
+          <Nav.Link
+            as={Link}
+            to="/shopping"
+            onClick={() => setActiveMenu('CAR')}
+            className="position-relative text-light me-3"
+          >
+            <i className="bi bi-cart-fill" style={{ fontSize: '1.5rem' }}></i>
+            {totalItems > 0 && (
+              <Badge
+                bg="danger"
+                pill
+                className="position-absolute top-0 start-100 translate-middle"
+                style={{ fontSize: '0.7rem' }}
+              >
+                {totalItems}
+              </Badge>
+            )}
+          </Nav.Link>
 
-        {/* Contenedor colapsable */}
-        <RBNavbar.Collapse id="navbarSupportedContent">   
-         
-          <Form className="me-auto w-auto" onSubmit={handleSearch}>
+          {/* 3. Botón hamburguesa */}
+          <RBNavbar.Toggle aria-controls="navbarSupportedContent" />
+        </div>
+
+        {/* 4. Contenedor colapsable (Solo lo que quieres que se oculte) */}
+        <RBNavbar.Collapse id="navbarSupportedContent">
+          <Form className="me-auto mt-2 mt-lg-0" onSubmit={handleSearch}>
             <div className="position-relative">
               <Form.Control
                 type="search"
@@ -81,50 +103,17 @@ export const Navbar = () => {
           </Form>
 
           <Nav className="ms-auto">
-            {/* Inicio con 'as={Link}' para mantener la navegación de react-router */}
-            <Nav.Link 
-              as={Link} 
-              to="/" 
-              active={activeMenu === 'INI'}
-              onClick={() => setActiveMenu('INI')}
-            >
+            <Nav.Link as={Link} to="/" active={activeMenu === 'INI'} onClick={() => setActiveMenu('INI')}>
               Inicio
             </Nav.Link>
 
-            {/* Dropdown dinámico desde el array Categories */}
-            <NavDropdown 
-              title="Categorías" 
-              id="navbarDarkDropdownMenuLink"
-              active={activeMenu === 'CAT'}
-              onClick={() => setActiveMenu('CAT')}
-              menuVariant="dark"
-            >
+            <NavDropdown title="Categorías" id="navbarDarkDropdownMenuLink" menuVariant="dark">
               {Categories.map((item, index) => (
-                <NavDropdown.Item 
-                  key={index} 
-                  as={Link} 
-                  className='small'
-                  to={`/category/${item.id_category}`}
-                >
+                <NavDropdown.Item className='small' key={index} as={Link} to={`/category/${item.id_category}`}>
                   {item.name_category}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
-
-            {/* Carrito */}
-            <Nav.Link as={Link} to="/shopping" onClick={() => setActiveMenu('CAR')} className="position-relative">
-              <i className="bi bi-cart-fill"></i>
-              {totalItems > 0 && (
-                <Badge
-                  bg="danger"
-                  pill
-                  className="position-absolute top-0 start-100 translate-middle"
-                  style={{ fontSize: '0.7rem' }}
-                >
-                  {totalItems}
-                </Badge>
-              )}
-            </Nav.Link>
           </Nav>
         </RBNavbar.Collapse>
       </Container>
