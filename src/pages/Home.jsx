@@ -6,7 +6,6 @@
  * @returns componente Home
  */
 
-import { useEffect } from 'react';
 import { Carrousel, BarTop } from '../components/Components';
 
 export const Home = ({categories}) => {

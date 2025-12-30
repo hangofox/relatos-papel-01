@@ -230,31 +230,31 @@ export const PaymentMethodPage = () => {
               <div className="mb-4 p-3 bg-white rounded">
                 <h5>Ingreso de datos:</h5>
                 <form>
-                  <div className="row">
-                    <div className="col ">
+                  <div className="row g-3">
+                    <div className="col-12 col-lg-3">
                       <label htmlFor="name">Nombre:</label>
                     </div>
-                    <div className="col">
+                    <div className="col-12 col-lg-3">
                       <input type="text" name="name" id="name" placeholder='Nombre' className="field form-control" onChange={(e) => setName(e.target.value)} />
                     </div>
-                    <div className="col">
+                    <div className="col-12 col-lg-3">
                       <label htmlFor="last_name">Apellido:</label>
                     </div>
-                    <div className="col">
+                    <div className="col-12 col-lg-3">
                       <input type="text" name="last_name" id="last_name" placeholder='Apellido' className="field form-control" onChange={(e) => setLastName(e.target.value)} />
                     </div>
                   </div>
-                  <div className="row mt-2">
-                    <div className="col">
+                  <div className="row mt-2 g-3">
+                    <div className="col-12 col-lg-3">
                       <label htmlFor="mail">Correo:</label>
                     </div>
-                    <div className="col">
+                    <div className="col-12 col-lg-3">
                       <input type="email" name="mail" id="mail" placeholder='nombre@dominio.com' className="field form-control" onChange={(e) => setMail(e.target.value)} />
                     </div>
-                    <div className="col">
+                    <div className="col-12 col-lg-3">
                       <label htmlFor="phone">Teléfono:</label>
                     </div>
-                    <div className="col">
+                    <div className="col-12 col-lg-3">
                       <input type="text" name="phone" id="phone" placeholder='058738214' className="field form-control" onChange={(e) => setPhone(e.target.value)} />
                     </div>
                   </div>

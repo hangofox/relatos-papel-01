@@ -44,8 +44,8 @@ export const Navbar = () => {
         {/* Logo y Nombre */}
         <RBNavbar.Brand as={Link} to="/" className="d-flex align-items-center text-light">
           <img
-            src="/img/logo.png"
-            alt="Logo Relatos de Papel"
+            src="/relatos/img/logo.png"
+            alt="Logo"
             width="50"
             className="d-inline-block align-text-top me-2"
           />
