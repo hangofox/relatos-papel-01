@@ -9,8 +9,7 @@
 
 import { Routes, Route } from 'react-router-dom';
 import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCardPage, OrderConfirmationPage, CategoriesPage } from './Pages';
-import { Navbar, Footer} from '../components/Components';
-import { ScrollToTop } from '../components/ScrollToTop';
+import { Navbar, Footer, ScrollToTop} from '../components/Components';
 export const Viewport = () => {
   return (
     <>
