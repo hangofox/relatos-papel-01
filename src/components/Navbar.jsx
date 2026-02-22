@@ -7,17 +7,18 @@
  * @returns componente Navbar
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Categories } from '../data/Data';
 import { useCart } from '../context/CartContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // Importaciones de React-Bootstrap
 import { Navbar as RBNavbar, Nav, NavDropdown, Container, Form, Button, Badge } from 'react-bootstrap';
+import { Categorias } from '../services/CategoriasService';
 
 export const Navbar = () => {
   const [activeMenu, setActiveMenu] = useState('INI');
+  const [categorias, setCategorias] = useState([]);
   // Estado para el texto de búsqueda
   const [searchQuery, setSearchQuery] = useState('');
   // Obtener el total de items del carrito
@@ -25,6 +26,14 @@ export const Navbar = () => {
   const totalItems = getTotalItems();
   // Navigate para la búsqueda
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const data = await Categorias();
+      setCategorias(data);
+    };
+    fetchCategories();
+  }, []);
 
   // Manejar búsqueda
   const handleSearch = (e) => {
@@ -82,6 +91,7 @@ export const Navbar = () => {
             <div className="position-relative">
               <Form.Control
                 type="search"
+                name="txtSearch"
                 placeholder="Buscar por titulo..."
                 aria-label="Buscar"
                 value={searchQuery}
@@ -91,6 +101,7 @@ export const Navbar = () => {
               {/* Lupa a la derecha, clickeable */}
               <button
                 type="submit"
+                name="btnSearch"
                 className="search-icon-btn"
                 aria-label="Buscar"
                 title="Buscar"
@@ -105,10 +116,10 @@ export const Navbar = () => {
               Inicio
             </Nav.Link>
 
-            <NavDropdown title="Categorías"  active={activeMenu === 'CAT'} id="navbarDarkDropdownMenuLink" menuVariant="dark"  onClick={() => setActiveMenu('CAT')}>
-              {Categories.map((item, index) => (
-                <NavDropdown.Item className='small' key={index} as={Link} to={`/category/${item.id_category}`}>
-                  {item.name_category}
+            <NavDropdown title="Categorías" active={activeMenu === 'CAT'} id="navbarDarkDropdownMenuLink" menuVariant="dark" onClick={() => setActiveMenu('CAT')}>
+              {categorias.map((item, index) => (
+                <NavDropdown.Item className='small' key={index} as={Link} to={`/category/${item.idCategoria}`}>
+                  {item.nombreCategoria}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>

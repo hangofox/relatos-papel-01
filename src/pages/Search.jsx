@@ -89,7 +89,7 @@ export const Search = () => {
           ) : (
             filteredBooks.map((book) => (
               <div key={book.id_book} className="col">
-                    <div className="card  book-card h-100" >
+                    <div className="card book-card h-100" >
                    <div className="image-box">
                     <img  className="card-img-top rounded shadow-sm" src={book.img_url} alt={book.title} loading="lazy" />
                   </div>
@@ -100,7 +100,9 @@ export const Search = () => {
                     <p className="card-text small text-muted mb-2">{book.author}</p>
                     <div className="mt-auto">
                       <p className="card-text fw-bold mb-2">${book.price}</p>
+                      <input type="hidden" name="" />
                         <button
+                          name={`btnDetalle` + book.id_book}
                           type="button"
                           className="button-blue w-100"
                           onClick={() => {

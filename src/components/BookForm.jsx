@@ -16,7 +16,7 @@ export const BookForm = ({ book }) => {
   //State para inicializar la cantidad
   const [cantidad, setCantidad] = useState(1);
   //State para mostrar error de modalidad
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   //State para mostrar mensaje de éxito
   const [success, setSuccess] = useState(false);
   //Contexto del carrito
@@ -25,20 +25,20 @@ export const BookForm = ({ book }) => {
   // Función para manejar agregar al carrito
   const handleAddToCart = () => {
     if (!modalidad) {
-      setError(true);
+      setError("Error seleccione modalidad");
       setSuccess(false);
       return;
     }
 
     const cantidadNum = parseInt(cantidad);
     if (cantidadNum <= 0) {
-      setError(true);
+      setError("Error coloque una cantidad mayor a cero");
       setSuccess(false);
       return;
     }
 
     addToCart(book, modalidad, cantidadNum);
-    setError(false);
+    setError("");
     setSuccess(true);
 
     // Limpiar mensaje de éxito después de 3 segundos
@@ -68,7 +68,6 @@ export const BookForm = ({ book }) => {
             <option value="F">Físico</option>
             <option value="D">Digital</option>
           </select>
-          {error && <span className='small text-danger'>Por favor seleccione una modalidad</span>}
         </div>
         <div className="col-lg-3 text-end">
           <label htmlFor="cantidad">Cantidad:</label>
@@ -85,12 +84,15 @@ export const BookForm = ({ book }) => {
           />
         </div>
       </div>
+      <div class="d-flex justify-content-center align-items-center">
+        <span className='small text-danger' name="errorMessage">{error}</span>
+      </div>
       <div className='row container-fluid align-items-center mt-2'>
         <div className="col-lg-6 text-end fw-bold">
           <label>${book.price}</label>
         </div>
         <div className="col-lg-6">
-          <button type="button" className='button-blue' onClick={handleAddToCart}>
+          <button type="button" name='btnAddCar' className='button-blue' onClick={handleAddToCart}>
             <i className="bi bi-cart-fill p-2"></i>
             Añadir al carrito
           </button>

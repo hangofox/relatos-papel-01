@@ -12,7 +12,7 @@ import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCard
 import { Navbar, Footer, ScrollToTop, LayerWelcome } from '../components/Components';
 import { useState, useEffect } from 'react';
 export const Viewport = () => {
-  const [pausa, setPausa] = useState(true);
+  /*const [pausa, setPausa] = useState(true);
 
   useEffect(() => {
     // Temporizador de 5 segundos
@@ -27,7 +27,7 @@ export const Viewport = () => {
   //Si la pausa está activa aparece el LayerWelcome
   if (pausa) {
     return <LayerWelcome aparece={pausa} />;
-  }
+  }*/
 
   //Cuando la pausa se desactiva aparece la página
   return (
@@ -37,7 +37,7 @@ export const Viewport = () => {
       {/* El contenido entre Navbar y Footer cambia según la URL */}
       <main>
         <Routes>
-          <Route path="/" element={<Home categories={[3, 4, 5]} />} />
+          <Route path="/" element={<Home categories={[1, 2, 3]} />} />
           <Route path="/search" element={<Search />} />
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/category/:id" element={<CategoriesPage />} />

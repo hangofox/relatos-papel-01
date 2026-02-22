@@ -7,37 +7,60 @@
  * @returns componente Carrousel
  */
 
-
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { BookCard } from './BookCard';
+import { Libros } from '../services/LibrosService';
 //Mis datos
-import { Books, Categories, BooksPerCategory } from '../data/Data';
+import { BooksPerCategory } from '../data/Data';
+import { Categorias } from '../services/CategoriasService';
 
 // Importar estilos de Swiper
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 export const Carrousel = ({ categories }) => {
-  const categoriesFiltered = Categories.filter(cat => categories.includes(cat.id_category));
+
+  const [books, setBooks] = useState([]);
+  const [categoriasFiltradas, setCategoriasFiltradas] = useState([]);
+
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      const data = await Libros();
+      setBooks(data);
+    };
+
+    fetchBooks();
+  }, []);
+
+  useEffect(() => {
+      const fetchCategories = async () => {
+        const data = await Categorias();
+        const catf = data.filter(cat => categories.includes(cat.idCategoria));
+        setCategoriasFiltradas(catf);
+      };
+      fetchCategories();
+    }, categories);
 
   return (
     <div className="container-fluid text-dark py-5">
-      {categoriesFiltered.map((cat) => {
+      {categoriasFiltradas.map((cat) => {
 
         // --- LÓGICA DE FILTRADO PARA ESTA CATEGORÍA ESPECÍFICA ---
         // 2. Buscamos en la tabla intermedia los libros de ESTA categoría (cat.id_category)
         const thisCategory = BooksPerCategory
-                            .filter(item => item.id_category === cat.id_category)
-                            .map(item => item.id_book);
+                            .filter(item => item.idCategoria === cat.idCategoria)
+                            .map(item => item.idLibro);
 
         // 3. Filtramos el array principal de libros usando esos IDs
-        const booksToShow = Books.filter(book => thisCategory.includes(book.id_book));
+        const booksToShow = books.filter(book => thisCategory.includes(book.idLibro));
         // -------------------------------------------------------
 
         return (
-          <div key={cat.id_category} className="mb-2">
-            <h5 className="mb-2 fw-bold">{cat.name_category}</h5>
+          <div key={cat.idCategoria} className="mb-2">
+            <h5 className="mb-2 fw-bold">{cat.nombreCategoria}</h5>
 
             <Swiper
               modules={[Navigation]}
@@ -53,7 +76,7 @@ export const Carrousel = ({ categories }) => {
             >
               {booksToShow.map((book) => (
                 <SwiperSlide
-                  key={book.id_book} // Usamos el id del libro que el index
+                  key={book.idLibro} // Usamos el id del libro que el index
                 >
                   <BookCard book={book} />
                 </SwiperSlide>

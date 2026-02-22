@@ -9,25 +9,16 @@
 
 import { useNavigate } from 'react-router-dom';
 import { BookForm } from "./Components";
-import { Categories, BooksPerCategory } from "../data/Data";
 
 export const BookInfo = ({ book }) => {
   
   //Se coloca el navigate para ir hacia atrás
   const navigate = useNavigate();
-  //Estos filtros son para extraer todas las categorías a las que pertenece el libro para imprimirlas
-  const categoriesOfThisBook = BooksPerCategory
-    .filter(item => item.id_book === book.id_book)
-    .map(item => item.id_category);
-  const categories = Categories.filter(item => categoriesOfThisBook.includes(item.id_category))
-  const listado = categories
-    .map(cat => cat.name_category)
-    .toString();
 
   return (
     <div className="row justify-content-center">
       <div className="col-auto p-lg-4 rounded-border back-gray">
-        <img src={book.img_url} height="250" alt="" />
+        <img src={book.nombreArchivoImagenLibro} height="250" alt="" />
       </div>
       <div className='d-none d-sm-block col-lg-auto'></div>
       <div className="col-6 p-4 rounded-border back-gray text-dark">
@@ -37,14 +28,14 @@ export const BookInfo = ({ book }) => {
             &nbsp;&nbsp;Regresar
           </a>
         </div>
-        <h3>{book.title}</h3><br />
+        <h3 id='title'>{book.tituloLibro}</h3><br />
         <span className='small'>
-          <b>Autor:</b> {book.author} |
-          <b>Categoría:</b> {listado} |
-          <b>Año publicación:</b> {book.publication_year}
+          <b>Autor:</b> {book.autor} |
+          <b>Categoría:</b> {book.categorias} |
+          <b>Fecha publicación:</b> {book.fechaPublicacionLibro}
         </span><br />
         <p className='mt-2'>
-          {book.synopsis}
+          {book.sinopsisLibro}
         </p>
         {/* Campos para la compra */}
         <BookForm
