@@ -14,7 +14,7 @@ export const Libros = async () => {
     return dataMap;
 
   } catch (error) {
-    console.error("Error:", error);
+    alert("Error:", error);
     return [];
   }
 };
@@ -27,7 +27,7 @@ export const Libro = async (idLibro) => {
     return transformaLibro(libro.libroDTO);
 
   } catch (error) {
-    console.error("Error:", error);
+    alert("Error:", error);
     return null;
   }
 };

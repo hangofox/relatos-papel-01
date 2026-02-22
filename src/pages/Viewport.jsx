@@ -12,6 +12,7 @@ import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCard
 import { Navbar, Footer, ScrollToTop, LayerWelcome } from '../components/Components';
 import { useState, useEffect } from 'react';
 export const Viewport = () => {
+  localStorage.setItem('idUsuarioConectado', 1);
   /*const [pausa, setPausa] = useState(true);
 
   useEffect(() => {

@@ -5,14 +5,29 @@
  * @returns componente ShoppingCartPage
 */
 
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { CartItem } from '../components/Components';
+import { ListarItemsCarrito } from '../services/VentasService';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const ShoppingCartPage = () => {
   const navigate = useNavigate();
   const { cartItems, getSubtotal, getTotalItems } = useCart();
+
+  const [productos, setProductos] = useState([]);
+
+  useEffect(() => {
+      const fetchProductos = async () => {
+        const idUsuario = localStorage.getItem('idUsuarioConectado');
+        const data = await ListarItemsCarrito(idUsuario);
+        console.log(data);
+        setProductos(data);
+      };
+  
+      fetchProductos();
+    }, []);
   
   const subtotal = getSubtotal();
   const envio = subtotal > 0 ? (subtotal >= 50 ? 0 : 5) : 0; // Envío gratis si el subtotal es mayor o igual a $50

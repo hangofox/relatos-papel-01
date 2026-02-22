@@ -14,7 +14,7 @@ export const LibroPorCategoria = async () => {
 
 
   } catch (error) {
-    console.error("Error:", error);
+    alert("Error:", error);
     return [];
   }
 }

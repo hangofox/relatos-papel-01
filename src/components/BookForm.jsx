@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { IngresaLibroCarrito } from '../services/VentasService';
 
 export const BookForm = ({ book }) => {
   //State para inicializar la modalidad
@@ -23,7 +24,7 @@ export const BookForm = ({ book }) => {
   const { addToCart } = useCart();
 
   // Función para manejar agregar al carrito
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!modalidad) {
       setError("Error seleccione modalidad");
       setSuccess(false);
@@ -37,9 +38,16 @@ export const BookForm = ({ book }) => {
       return;
     }
 
-    addToCart(book, modalidad, cantidadNum);
-    setError("");
-    setSuccess(true);
+    const ventaSuccess = await IngresaLibroCarrito(book, 1, cantidad);
+
+    if (ventaSuccess) {
+      addToCart(book, modalidad, cantidadNum);
+      setError("");
+      setSuccess(true);
+    } else {
+      setError("Ha ocurrido un error");
+      setSuccess(false);
+    }
 
     // Limpiar mensaje de éxito después de 3 segundos
     setTimeout(() => {
@@ -89,7 +97,7 @@ export const BookForm = ({ book }) => {
       </div>
       <div className='row container-fluid align-items-center mt-2'>
         <div className="col-lg-6 text-end fw-bold">
-          <label>${book.price}</label>
+          <label>${book.precioLibro}</label>
         </div>
         <div className="col-lg-6">
           <button type="button" name='btnAddCar' className='button-blue' onClick={handleAddToCart}>
