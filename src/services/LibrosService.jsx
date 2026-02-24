@@ -96,9 +96,6 @@ export const LibrosPorCategoria = async (idCategoria) => {
       .filter(libro => libro !== null)
       .map(libro => transformaLibro(libro));
 
-
-    console.log(dataMap);
-
     return dataMap;
 
   } catch (error) {
