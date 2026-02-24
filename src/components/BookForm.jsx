@@ -92,7 +92,7 @@ export const BookForm = ({ book }) => {
           />
         </div>
       </div>
-      <div class="d-flex justify-content-center align-items-center">
+      <div className="d-flex justify-content-center align-items-center">
         <span className='small text-danger' name="errorMessage">{error}</span>
       </div>
       <div className='row container-fluid align-items-center mt-2'>

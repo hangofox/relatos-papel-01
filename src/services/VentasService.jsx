@@ -14,7 +14,7 @@ const ventaIngresadaXUsuario = async (idUsuario) => {
     return venta.idVenta;
 
   } catch (error) {
-    alert(error);
+    console.log(error);
     return null;
   }
 };
@@ -81,7 +81,7 @@ export const ListarItemsCarrito = async (idUsuario) => {
       return null;
     }
   } catch (error) {
-    alert(error);
+    console.log(error);
   }
 
 

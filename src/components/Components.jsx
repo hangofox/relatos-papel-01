@@ -14,3 +14,4 @@ export * from './CreditCard';
 export * from './CartItem';
 export * from './ScrollToTop';
 export * from './LayerWelcome'
+export * from './CategoryCarousel'

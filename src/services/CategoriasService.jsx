@@ -14,7 +14,7 @@ export const Categorias = async () => {
 
 
   } catch (error) {
-    alert("Error:", error);
+    console.log(error);
     return [];
   }
 }

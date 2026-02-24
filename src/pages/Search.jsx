@@ -9,16 +9,16 @@
 
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Books} from '../data/Data';
+import { BuscarLibros } from '../services/LibrosService';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const Search = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  
+
   // Estados para los filtros
   const [searchText, setSearchText] = useState(searchParams.get('q') || '');
-  const [filteredBooks, setFilteredBooks] = useState(Books);
+  const [filteredBooks, setFilteredBooks] = useState([]);
 
   // Actualiza searchText cuando cambia la URL
   useEffect(() => {
@@ -28,24 +28,19 @@ export const Search = () => {
 
   // Aplicar filtros
   useEffect(() => {
-    let result = Books;
-
-  
-  //  Filtrar por título con búsqueda acumulativa por palabras (AND)
+    //  Filtrar por título con búsqueda acumulativa por palabras (AND)
     if (searchText.trim()) {
       const tokens = searchText
         .toLowerCase()
         .split(/\s+/)
         .filter(Boolean);
 
-      result = result.filter(book => {
-        const title = (book.title || '').toLowerCase();
-        return tokens.every(tok => title.includes(tok)); // AND
-        // Si prefieres OR: return tokens.some(tok => title.includes(tok));
-      });
+      const fetchBusqueda = async () => {
+        const data = await BuscarLibros(tokens);
+        setFilteredBooks(data);
+      };
+      fetchBusqueda();
     }
-
-    setFilteredBooks(result);
   }, [searchText]);
 
   return (
@@ -63,8 +58,9 @@ export const Search = () => {
                   {filteredBooks.length === 1
                     ? 'resultado encontrado'
                     : 'resultados encontrados'}
+                    { ' con el texto: [' + searchText + ']' }
                 </span>
-              </h5>                  
+              </h5>
               {/* Botón limpiar */}
               {searchText && (
                 <button
@@ -88,28 +84,28 @@ export const Search = () => {
             </div>
           ) : (
             filteredBooks.map((book) => (
-              <div key={book.id_book} className="col">
-                    <div className="card book-card h-100" >
-                   <div className="image-box">
-                    <img  className="card-img-top rounded shadow-sm" src={book.img_url} alt={book.title} loading="lazy" />
+              <div key={book.idLibro} className="col">
+                <div className="card book-card h-100" >
+                  <div className="image-box">
+                    <img className="card-img-top rounded shadow-sm" src={book.nombreArchivoImagenLibro} alt={book.tituloLibro} loading="lazy" />
                   </div>
                   <div className="card-body d-flex flex-column">
-                    <h6 className="card-title text-truncate" title={book.title}>
-                      {book.title}
+                    <h6 className="card-title text-truncate" title={book.tituloLibro}>
+                      {book.tituloLibro}
                     </h6>
-                    <p className="card-text small text-muted mb-2">{book.author}</p>
+                    <p className="card-text small text-muted mb-2">{book.autor}</p>
                     <div className="mt-auto">
-                      <p className="card-text fw-bold mb-2">${book.price}</p>
+                      <p className="card-text fw-bold mb-2">${book.precioLibro}</p>
                       <input type="hidden" name="" />
-                        <button
-                          name={`btnDetalle` + book.id_book}
-                          type="button"
-                          className="button-blue w-100"
-                          onClick={() => {
-                            if (!book?.id_book) return; 
-                            navigate(`/book/${book.id_book}`);
-                          }}
-                        >
+                      <button
+                        name={`btnDetalle` + book.idLibro}
+                        type="button"
+                        className="button-blue w-100"
+                        onClick={() => {
+                          if (!book?.idLibro) return;
+                          navigate(`/book/${book.idLibro}`);
+                        }}
+                      >
                         Ver detalles
                       </button>
                     </div>
