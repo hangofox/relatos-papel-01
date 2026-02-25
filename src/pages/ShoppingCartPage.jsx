@@ -5,45 +5,25 @@
  * @returns componente ShoppingCartPage
 */
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { CartItem } from '../components/Components';
-import { ListarItemsCarrito } from '../services/VentasService';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const ShoppingCartPage = () => {
   const navigate = useNavigate();
-
-  const [productos, setProductos] = useState([]);
-  const [subtotalVenta, setSubtotalVenta] = useState(0);
-  const [cantidadTotal, setCantidadTotal] = useState(0);
+  const { cartItems, getSubtotal, getTotalItems, refrescarCarrito } = useCart();
 
   useEffect(() => {
-    const fetchProductos = async () => {
-      const idUsuario = localStorage.getItem('idUsuarioConectado');
-      const data = await ListarItemsCarrito(idUsuario);
-      if (data !== null) {
-        const subtotal = data.reduce((acc, item) => {
-          return acc + (item.precioUnitarioLibro * item.cantidadItem);
-        }, 0);
-
-        const cantidadTotal = data.reduce((acc, item) => {
-          return acc + item.cantidadItem;
-        }, 0);
-        setSubtotalVenta(subtotal);
-        setCantidadTotal(cantidadTotal);
-        setProductos(data);
-      }
-    };
-
-    fetchProductos();
+    refrescarCarrito();
   }, []);
 
-  const envio = subtotalVenta > 0 ? (subtotalVenta >= 50 ? 0 : 5) : 0; // Envío gratis si el subtotal es mayor o igual a $50
-  const total = subtotalVenta + envio;
+  const subtotal = getSubtotal();
+  const envio = subtotal > 0 ? (subtotal >= 50 ? 0 : 5) : 0; // Envío gratis si el subtotal es mayor o igual a $50
+  const total = subtotal + envio;
 
-  if (productos.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <div className="container py-5">
         <div className="row justify-content-center">
@@ -86,8 +66,8 @@ export const ShoppingCartPage = () => {
             </div>
 
             {/* Items del carrito */}
-            {productos.map((item, index) => (
-              <CartItem key={`${item.idLibro}-${"F"}-${index}`} item={item} />
+            {cartItems.map((item, index) => (
+              <CartItem key={`${item.idProductoFacturado}-${item.modalidad}-${index}`} item={item} />
             ))}
           </div>
 
@@ -107,8 +87,8 @@ export const ShoppingCartPage = () => {
             <h4 className="mb-4">Resumen del pedido</h4>
 
             <div className="d-flex justify-content-between mb-2">
-              <span>Productos ({cantidadTotal}):</span>
-              <span>${subtotalVenta.toFixed(2)}</span>
+              <span>Productos ({getTotalItems()}):</span>
+              <span>${subtotal.toFixed(2)}</span>
             </div>
 
             <div className="d-flex justify-content-between mb-2">
@@ -116,9 +96,9 @@ export const ShoppingCartPage = () => {
               <span>{envio === 0 ? 'GRATIS' : `$${envio.toFixed(2)}`}</span>
             </div>
 
-            {subtotalVenta < 50 && subtotalVenta > 0 && (
+            {subtotal < 50 && subtotal > 0 && (
               <div className="alert alert-info small mt-2 mb-2">
-                <i className="bi bi-info-circle"></i> Agrega ${(50 - subtotalVenta).toFixed(2)} más para envío gratis
+                <i className="bi bi-info-circle"></i> Agrega ${(50 - subtotal).toFixed(2)} más para envío gratis
               </div>
             )}
 

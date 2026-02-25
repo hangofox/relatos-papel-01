@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { ActualizaEstadoVenta } from '../services/VentasService';
 
 export const PaymentMethodPage = () => {
   const [showPayPalSimulation, setShowPayPalSimulation] = useState(false);
@@ -23,10 +24,10 @@ export const PaymentMethodPage = () => {
   const [selectedMethod, setSelectedMethod] = useState('');
   const [paypalStep, setPaypalStep] = useState(1); // 1: login, 2: confirmar, 3: procesando
   const [paypalEmail, setPaypalEmail] = useState(''); // Email o teléfono para PayPal
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [mail, setMail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState(localStorage.getItem('nombreUsuario'));
+  const [lastName, setLastName] = useState(localStorage.getItem('apellidoUsuario'));
+  const [mail, setMail] = useState(localStorage.getItem('correoUsuario'));
+  const [phone, setPhone] = useState(localStorage.getItem('telefonoUsuario'));
 
   //Si el carrito está vacío, redirigir al carrito.
   if (cartItems.length === 0) {
@@ -87,14 +88,22 @@ export const PaymentMethodPage = () => {
     setPaypalStep(2);
   };
 
-  const handlePayPalConfirm = () => {
-    // Simular procesamiento
-    setPaypalStep(3);
+  const handlePayPalConfirm = async () => {
+    const idUsuario = localStorage.getItem("idUsuarioConectado");
+    //Cambia la venta a pagada
+    const exito = await ActualizaEstadoVenta(idUsuario);
 
-    // Después de 2 segundos, ir a confirmación
-    setTimeout(() => {
-      navigate('/order-confirmation');
-    }, 2000);
+    if (exito) {
+      // Simular procesamiento
+      setPaypalStep(3);
+      // Después de 2 segundos, ir a confirmación
+      setTimeout(() => {
+        navigate('/order-confirmation');
+      }, 2000);
+    } else {
+      alert('Error en el proceso del pago');
+    }
+
   };
 
   const handleCancelPayPal = () => {
@@ -235,13 +244,13 @@ export const PaymentMethodPage = () => {
                       <label htmlFor="name">Nombre:</label>
                     </div>
                     <div className="col-12 col-lg-3">
-                      <input type="text" name="name" id="name" placeholder='Nombre' className="field form-control" onChange={(e) => setName(e.target.value)} />
+                      <input type="text" name="name" id="name" value={name} placeholder='Nombre' className="field form-control" onChange={(e) => setName(e.target.value)} />
                     </div>
                     <div className="col-12 col-lg-3">
                       <label htmlFor="last_name">Apellido:</label>
                     </div>
                     <div className="col-12 col-lg-3">
-                      <input type="text" name="last_name" id="last_name" placeholder='Apellido' className="field form-control" onChange={(e) => setLastName(e.target.value)} />
+                      <input type="text" name="last_name" id="last_name" value={lastName} placeholder='Apellido' className="field form-control" onChange={(e) => setLastName(e.target.value)} />
                     </div>
                   </div>
                   <div className="row mt-2 g-3">
@@ -249,13 +258,13 @@ export const PaymentMethodPage = () => {
                       <label htmlFor="mail">Correo:</label>
                     </div>
                     <div className="col-12 col-lg-3">
-                      <input type="email" name="mail" id="mail" placeholder='nombre@dominio.com' className="field form-control" onChange={(e) => setMail(e.target.value)} />
+                      <input type="email" name="mail" id="mail" value={mail} placeholder='nombre@dominio.com' className="field form-control" onChange={(e) => setMail(e.target.value)} />
                     </div>
                     <div className="col-12 col-lg-3">
                       <label htmlFor="phone">Teléfono:</label>
                     </div>
                     <div className="col-12 col-lg-3">
-                      <input type="text" name="phone" id="phone" placeholder='058738214' className="field form-control" onChange={(e) => setPhone(e.target.value)} />
+                      <input type="text" name="phone" id="phone" value={phone} placeholder='058738214' className="field form-control" onChange={(e) => setPhone(e.target.value)} />
                     </div>
                   </div>
                 </form>

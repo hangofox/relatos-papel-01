@@ -98,19 +98,19 @@ export const OrderConfirmationPage = () => {
                   <div key={index} className="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
                     <div className="d-flex align-items-center">
                       <img
-                        src={item.img_url}
-                        alt={item.title}
+                        src={item.imgUrl}
+                        alt={item.tituloLibro}
                         className="me-3 rounded order-product-image"
                       />
                       <div>
-                        <div className="fw-bold">{item.title}</div>
-                        <small className="text-muted">
-                          {item.modalidad === 'F' ? 'Físico' : 'Digital'} - Cantidad: {item.cantidad}
-                        </small>
+                        <div className="fw-bold">{item.tituloLibro}</div>
+                        {/* <small className="text-muted">
+                          {item.modalidad === 'F' ? 'Físico' : 'Digital'} - Cantidad: {item.cantidadItem}
+                        </small> */}
                       </div>
                     </div>
                     <div className="text-end">
-                      <strong>${(item.price * item.cantidad).toFixed(2)}</strong>
+                      <strong>${(item.precioUnitarioLibro * item.cantidadItem).toFixed(2)}</strong>
                     </div>
                   </div>
                 ))}

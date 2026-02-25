@@ -1,12 +1,28 @@
 const API_URL = import.meta.env.VITE_API_URL;
 const IMG_URL = import.meta.env.VITE_IMG_URL;
 
-const ventaIngresadaXUsuario = async (idUsuario) => {
+const ventaExistente = async (idUsuario) => {
   try {
     const response = await fetch(`${API_URL}payments/ventas/ingresada/usuario/${idUsuario}`);
     let venta = await response.json();
 
     if (response.status === 404) {
+      return null;
+    }
+
+    return venta;
+
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+const ventaIngresadaXUsuario = async (idUsuario) => {
+  try {
+    let venta = await ventaExistente(idUsuario);
+
+    if (venta === null) {
       venta = await crearVenta(idUsuario);
     }
 
@@ -68,18 +84,23 @@ export const IngresaLibroCarrito = async (libro, idUsuario, cantidad) => {
 export const ListarItemsCarrito = async (idUsuario) => {
   try {
     const idVenta = await ventaIngresadaXUsuario(idUsuario);
-
     if (idVenta) {
       const response = await fetch(`${API_URL}payments/productos/${idVenta}`);
-      const detalles = await response.json();
-      return detalles.map(item => ({
-        ...item,
-        imgUrl: IMG_URL.replace("IMAGENRPL", item.codigoImagen)
-      })
-      );
+      if (response.ok) {
+        const detalles = await response.json();
+        if (detalles) {
+          return detalles.map(item => ({
+            ...item,
+            imgUrl: IMG_URL.replace("IMAGENRPL", item.codigoImagen)
+          })
+          );
+        }
+      }
     }
+    return [];
   } catch (error) {
     console.log(error);
+    return [];
   }
 
 
@@ -120,7 +141,7 @@ export const Usuario = async (idUsuario) => {
 };
 
 export const ActualizaCantidad = async (idProductoFacturado, cantidad) => {
-  try{
+  try {
 
     const response = await fetch(`${API_URL}payments/productos/${idProductoFacturado}`, {
       method: "PATCH",
@@ -130,13 +151,58 @@ export const ActualizaCantidad = async (idProductoFacturado, cantidad) => {
       })
     });
 
-    if(response.ok){
+    if (response.ok) {
       return true;
     }
 
     return false;
 
-  } catch(error) {
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const EliminaProducto = async (idProductoFacturado) => {
+  try {
+    const response = await fetch(`${API_URL}payments/productos/${idProductoFacturado}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" }
+    });
+
+    if (response.ok) {
+      return true;
+    }
+
+    return false;
+
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const ActualizaEstadoVenta = async (idUsuario) => {
+  try {
+    const venta = await ventaExistente(idUsuario);
+
+    if (venta !== null) {
+      const response = await fetch(`${API_URL}payments/ventas/${venta.idVenta}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "estadoVenta": "PAGADA"
+        })
+      });
+
+      if (response.ok) {
+        return true;
+      }
+    }
+
+    return false;
+
+  } catch (error) {
     console.log(error);
     return false;
   }

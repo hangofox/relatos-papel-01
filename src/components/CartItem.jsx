@@ -9,23 +9,20 @@ import { useCart } from '../context/CartContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const CartItem = ({ item }) => {
-
-  console.log(item);
-
   const { updateQuantity, removeFromCart } = useCart();
 
   const handleIncrement = () => {
-    updateQuantity(item.cantidadItem, item.cantidadItem + 1);
+    updateQuantity(item.idProductoFacturado, item.cantidadItem + 1);
   };
 
   const handleDecrement = () => {
     if (item.cantidadItem > 1) {
-      updateQuantity(item.cantidadItem, item.cantidadItem - 1);
+      updateQuantity(item.idProductoFacturado, item.cantidadItem - 1);
     }
   };
 
   const handleRemove = () => {
-    removeFromCart(item.cantidadItem);
+    removeFromCart(item.idProductoFacturado);
   };
 
   const subtotal = item.precioUnitarioLibro * item.cantidadItem;
@@ -37,6 +34,7 @@ export const CartItem = ({ item }) => {
       </div>
       <div className="col-lg-3 col-md-4 col-8">
         <h6 className="mb-1">{item.tituloLibro}</h6>
+        <small>{ item.idProductoFacturado }</small>
         <div className="mt-1">
           <span className="badge bg-secondary">
             {item.modalidad === 'F' ? 'Físico' : 'Digital'}

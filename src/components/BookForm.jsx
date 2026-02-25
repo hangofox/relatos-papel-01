@@ -21,10 +21,12 @@ export const BookForm = ({ book }) => {
   //State para mostrar mensaje de éxito
   const [success, setSuccess] = useState(false);
   //Contexto del carrito
-  const { addToCart } = useCart();
+  const { refrescarCarrito } = useCart();
 
   // Función para manejar agregar al carrito
   const handleAddToCart = async () => {
+    const idUsuario = localStorage.getItem('idUsuarioConectado');
+
     if (!modalidad) {
       setError("Error seleccione modalidad");
       setSuccess(false);
@@ -38,10 +40,10 @@ export const BookForm = ({ book }) => {
       return;
     }
 
-    const ventaSuccess = await IngresaLibroCarrito(book, 1, cantidad);
+    const ventaSuccess = await IngresaLibroCarrito(book, idUsuario, cantidad);
 
     if (ventaSuccess) {
-      addToCart(cantidadNum);
+      await refrescarCarrito();
       setError("");
       setSuccess(true);
     } else {

@@ -1,4 +1,12 @@
+/**
+ * Creado por: Hernan Nuñez
+ * Fecha: 2025-12-27
+ * Descripción: Context API para la gestión del carrito de compras
+ * @returns CartContext y CartProvider
+ */
+
 import { createContext, useContext, useState, useEffect } from 'react';
+import { ActualizaCantidad, EliminaProducto, ListarItemsCarrito } from '../services/VentasService';
 
 const CartContext = createContext();
 
@@ -12,75 +20,58 @@ export const useCart = () => {
 
 export const CartProvider = ({ children }) => {
 
-  // 🔥 SOLO el contador persistido
-  const [totalItems, setTotalItems] = useState(() => {
-    const savedTotal = localStorage.getItem('relatosPapelCartCount');
-    return savedTotal ? parseInt(savedTotal) : 0;
-  });
+  const idUsuario = localStorage.getItem("idUsuarioConectado");
+  const [cartItems, setCartItems] = useState([]);
 
-  // Persistir contador
-  useEffect(() => {
-    localStorage.setItem('relatosPapelCartCount', totalItems);
-  }, [totalItems]);
+  const refrescarCarrito = async () => {
+    const data = await ListarItemsCarrito(idUsuario)
+    setCartItems(data);
+  };
 
-  useEffect(() => {
-    const cargarTotalDesdeBD = async () => {
-      try {
-        const idUsuario = localStorage.getItem('idUsuarioConectado');
-
-        if (!idUsuario) return;
-
-        const total = await CuantosItems(idUsuario);
-
-        if (total !== null) {
-          setTotalItems(Number(total));
-        }
-      } catch (error) {
-        console.error("Error cargando total del carrito:", error);
-      }
-    };
-
-    cargarTotalDesdeBD();
-  }, []);
-
-  //Agregar item
+  // Agregar item al carrito
   const addToCart = (cantidad) => {
-    setTotalItems(prev => prev + cantidad);
+    
+  };
+
+  // Eliminar item del carrito
+  const removeFromCart = async (idProductoFacturado) => {
+    await EliminaProducto(idProductoFacturado);
+    await refrescarCarrito();
+  };
+
+  // Actualizar cantidad de un item
+  const updateQuantity = async (idProductoFacturado, nuevaCantidad) => {
+    await ActualizaCantidad(idProductoFacturado, nuevaCantidad);
+    await refrescarCarrito();
+  };
+
+  // Vaciar carrito
+  const clearCart = () => {
+    setCartItems([]);
   };
 
   // Obtener total de items en el carrito
   const getTotalItems = () => {
-    return totalItems;
+    if(!cartItems) return 0;
+    return cartItems.reduce((total, item) => total + item.cantidadItem, 0);
   };
 
-  //Remover item completamente
-  const removeFromCart = (cantidad) => {
-    setTotalItems(prev => Math.max(prev - cantidad, 0));
-  };
-
-  //Cuando se cambia la cantidad manualmente
-  const updateQuantity = (oldCantidad, newCantidad) => {
-    const diferencia = newCantidad - oldCantidad;
-    setTotalItems(prev => Math.max(prev + diferencia, 0));
-  };
-
-  //Vaciar carrito
-  const clearCart = () => {
-    setTotalItems(0);
+  // Obtener subtotal del carrito
+  const getSubtotal = () => {
+    if(!cartItems) return 0;
+    return cartItems.reduce((total, item) => total + (item.precioUnitarioLibro * item.cantidadItem), 0);
   };
 
   const value = {
-    totalItems,
+    refrescarCarrito,
+    cartItems,
     addToCart,
     removeFromCart,
     updateQuantity,
+    clearCart,
     getTotalItems,
-    clearCart
+    getSubtotal
   };
 
-  return (
-    <CartContext.Provider value={value}>
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

@@ -23,6 +23,7 @@ export const Viewport = () => {
         localStorage.setItem('nombreUsuario', usuario.nombreUsuario);
         localStorage.setItem('apellidoUsuario', usuario.apellidoUsuario);
         localStorage.setItem('telefonoUsuario', usuario.telefonoUsuario);
+        localStorage.setItem('correoUsuario', usuario.correoUsuario);
       }
     }
     fetchUsuario();
