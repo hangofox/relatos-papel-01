@@ -13,13 +13,21 @@ import { Libro } from '../services/LibrosService';
 export const BookPage = () => {
   const { id } = useParams();
   const idLibro = Number(id);
-  const [libro, setLibro] = useState(null);
+  const [libro, setLibro] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchBook = async () => {
-      const data = await Libro(idLibro);
-      console.log(data.idLibro);
-      setLibro(data);
+      try {
+        setLoading(true);
+        const data = await Libro(idLibro);
+        setLibro(data || []);
+      } catch (error) {
+        console.log(error);
+        setLibro([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchBook();
@@ -27,7 +35,20 @@ export const BookPage = () => {
 
   return (
     <div className="mt-3 mt-lg-5">
-       {libro && <BookInfo book={libro} />}
+      {
+        loading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "250px" }}
+          >
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Cargando...</span>
+            </div>
+          </div>
+        ) : (
+          <BookInfo book={libro} />
+        )
+      }
     </div>
   );
 }

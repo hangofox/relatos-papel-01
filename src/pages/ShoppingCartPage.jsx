@@ -14,26 +14,36 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const ShoppingCartPage = () => {
   const navigate = useNavigate();
-  const { cartItems, getSubtotal, getTotalItems } = useCart();
 
   const [productos, setProductos] = useState([]);
+  const [subtotalVenta, setSubtotalVenta] = useState(0);
+  const [cantidadTotal, setCantidadTotal] = useState(0);
 
   useEffect(() => {
-      const fetchProductos = async () => {
-        const idUsuario = localStorage.getItem('idUsuarioConectado');
-        const data = await ListarItemsCarrito(idUsuario);
-        console.log(data);
+    const fetchProductos = async () => {
+      const idUsuario = localStorage.getItem('idUsuarioConectado');
+      const data = await ListarItemsCarrito(idUsuario);
+      if (data !== null) {
+        const subtotal = data.reduce((acc, item) => {
+          return acc + (item.precioUnitarioLibro * item.cantidadItem);
+        }, 0);
+
+        const cantidadTotal = data.reduce((acc, item) => {
+          return acc + item.cantidadItem;
+        }, 0);
+        setSubtotalVenta(subtotal);
+        setCantidadTotal(cantidadTotal);
         setProductos(data);
-      };
-  
-      fetchProductos();
-    }, []);
-  
-  const subtotal = getSubtotal();
-  const envio = subtotal > 0 ? (subtotal >= 50 ? 0 : 5) : 0; // Envío gratis si el subtotal es mayor o igual a $50
-  const total = subtotal + envio;
-  
-  if (cartItems.length === 0) {
+      }
+    };
+
+    fetchProductos();
+  }, []);
+
+  const envio = subtotalVenta > 0 ? (subtotalVenta >= 50 ? 0 : 5) : 0; // Envío gratis si el subtotal es mayor o igual a $50
+  const total = subtotalVenta + envio;
+
+  if (productos.length === 0) {
     return (
       <div className="container py-5">
         <div className="row justify-content-center">
@@ -51,7 +61,7 @@ export const ShoppingCartPage = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="container py-4 text-black">
       <div className="row">
@@ -61,7 +71,7 @@ export const ShoppingCartPage = () => {
           </h2>
         </div>
       </div>
-      
+
       <div className="row">
         <div className="col-lg-8">
           <div className="back-gray rounded-border p-4">
@@ -74,13 +84,13 @@ export const ShoppingCartPage = () => {
               <div className="col-lg-1 text-center">Subtotal</div>
               <div className="col-lg-1 text-center"></div>
             </div>
-            
+
             {/* Items del carrito */}
-            {cartItems.map((item, index) => (
-              <CartItem key={`${item.id_book}-${item.modalidad}-${index}`} item={item} />
+            {productos.map((item, index) => (
+              <CartItem key={`${item.idLibro}-${"F"}-${index}`} item={item} />
             ))}
           </div>
-          
+
           <div className="mt-3">
             <button
               className="btn btn-outline-secondary"
@@ -90,39 +100,39 @@ export const ShoppingCartPage = () => {
             </button>
           </div>
         </div>
-        
+
         {/* Resumen del pedido */}
         <div className="col-lg-4">
           <div className="back-gray rounded-border p-4">
             <h4 className="mb-4">Resumen del pedido</h4>
-            
+
             <div className="d-flex justify-content-between mb-2">
-              <span>Productos ({getTotalItems()}):</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>Productos ({cantidadTotal}):</span>
+              <span>${subtotalVenta.toFixed(2)}</span>
             </div>
-            
+
             <div className="d-flex justify-content-between mb-2">
               <span>Envío:</span>
               <span>{envio === 0 ? 'GRATIS' : `$${envio.toFixed(2)}`}</span>
             </div>
-            
-            {subtotal < 50 && subtotal > 0 && (
+
+            {subtotalVenta < 50 && subtotalVenta > 0 && (
               <div className="alert alert-info small mt-2 mb-2">
-                <i className="bi bi-info-circle"></i> Agrega ${(50 - subtotal).toFixed(2)} más para envío gratis
+                <i className="bi bi-info-circle"></i> Agrega ${(50 - subtotalVenta).toFixed(2)} más para envío gratis
               </div>
             )}
-            
+
             <hr />
-            
+
             <div className="d-flex justify-content-between mb-4">
               <strong>Total:</strong>
               <strong className="cart-total-price">${total.toFixed(2)}</strong>
             </div>
-            
+
             <button className="button-blue w-100" onClick={() => navigate('/payment-method')}>
               Proceder al pago <i className="bi bi-arrow-right"></i>
             </button>
-            
+
             <div className="text-center mt-3">
               <small className="text-muted">
                 <i className="bi bi-shield-check"></i> Compra segura

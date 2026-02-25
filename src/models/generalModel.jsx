@@ -2,7 +2,7 @@ export const LibroModel = {
   idLibro: null,
   autor: null,
   categorias: "",
-  tituloLbro: "",
+  tituloLibro: "",
   fechaPublicacionLibro: "",
   sinopsisLibro: "",
   codigoIsbnLibro: "",

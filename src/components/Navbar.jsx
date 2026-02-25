@@ -81,6 +81,19 @@ export const Navbar = () => {
             )}
           </Nav.Link>
 
+          <Nav.Item>
+            <div className='text-center'>
+              <i className="bi bi-person nav-ico"></i>
+            </div>
+            <div className='text-center'>
+              <small>
+                {
+                  localStorage.getItem("nombreUsuario") + ' ' + localStorage.getItem("apellidoUsuario")
+                }
+              </small>
+            </div>
+          </Nav.Item>
+
           {/* 3. Botón hamburguesa */}
           <RBNavbar.Toggle aria-controls="navbarSupportedContent" />
         </div>
@@ -123,6 +136,9 @@ export const Navbar = () => {
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
+
+
+
           </Nav>
         </RBNavbar.Collapse>
       </Container>

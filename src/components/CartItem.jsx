@@ -9,32 +9,34 @@ import { useCart } from '../context/CartContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const CartItem = ({ item }) => {
+
+  console.log(item);
+
   const { updateQuantity, removeFromCart } = useCart();
 
   const handleIncrement = () => {
-    updateQuantity(item.id_book, item.modalidad, item.cantidad + 1);
+    updateQuantity(item.cantidadItem, item.cantidadItem + 1);
   };
 
   const handleDecrement = () => {
-    if (item.cantidad > 1) {
-      updateQuantity(item.id_book, item.modalidad, item.cantidad - 1);
+    if (item.cantidadItem > 1) {
+      updateQuantity(item.cantidadItem, item.cantidadItem - 1);
     }
   };
 
   const handleRemove = () => {
-    removeFromCart(item.id_book, item.modalidad);
+    removeFromCart(item.cantidadItem);
   };
 
-  const subtotal = item.price * item.cantidad;
+  const subtotal = item.precioUnitarioLibro * item.cantidadItem;
 
   return (
     <div className="row align-items-center py-3 border-bottom text-black">
       <div className="col-lg-2 col-md-3 col-4">
-        <img src={item.img_url} alt={item.title} className="img-fluid rounded-border" style={{ maxHeight: '120px' }} />
+        <img src={item.imgUrl} alt={item.tituloLibro} className="img-fluid rounded-border" style={{ maxHeight: '120px' }} />
       </div>
       <div className="col-lg-3 col-md-4 col-8">
-        <h6 className="mb-1">{item.title}</h6>
-        <small className="text-muted">{item.author}</small>
+        <h6 className="mb-1">{item.tituloLibro}</h6>
         <div className="mt-1">
           <span className="badge bg-secondary">
             {item.modalidad === 'F' ? 'Físico' : 'Digital'}
@@ -42,18 +44,18 @@ export const CartItem = ({ item }) => {
         </div>
       </div>
       <div className="col-lg-2 col-md-2 col-4 text-center">
-        <strong>${item.price}</strong>
+        <strong>${item.precioUnitarioLibro}</strong>
       </div>
       <div className="col-lg-3 col-md-2 col-4">
         <div className="d-flex align-items-center justify-content-center">
           <button
             className="btn btn-sm btn-outline-secondary"
             onClick={handleDecrement}
-            disabled={item.cantidad <= 1}
+            disabled={item.cantidadItem <= 1}
           >
             <i className="bi bi-dash"></i>
           </button>
-          <span className="mx-3 fw-bold">{item.cantidad}</span>
+          <span className="mx-3 fw-bold">{item.cantidadItem}</span>
           <button
             className="btn btn-sm btn-outline-secondary"
             onClick={handleIncrement}

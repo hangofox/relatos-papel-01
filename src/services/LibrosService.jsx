@@ -44,6 +44,7 @@ const transformaLibro = (libro) => {
     ...LibroModel,
     ...rest,
     categorias: buildCategorias(categorias),
+    codigoImagen: nombreArchivoImagenLibro,
     nombreArchivoImagenLibro: imgUrl,
     autor: buildAutor(autorDTO)
   };

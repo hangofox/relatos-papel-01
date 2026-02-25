@@ -1,10 +1,3 @@
-/**
- * Creado por: Hernan Nuñez
- * Fecha: 2025-12-27
- * Descripción: Context API para la gestión del carrito de compras
- * @returns CartContext y CartProvider
- */
-
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
@@ -18,84 +11,76 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cartItems, setCartItems] = useState(() => {
-    // Cargar carrito desde localStorage al iniciar
-    const savedCart = localStorage.getItem('relatosPapelCart');
-    return savedCart ? JSON.parse(savedCart) : [];
+
+  // 🔥 SOLO el contador persistido
+  const [totalItems, setTotalItems] = useState(() => {
+    const savedTotal = localStorage.getItem('relatosPapelCartCount');
+    return savedTotal ? parseInt(savedTotal) : 0;
   });
 
-  // Guardar carrito en localStorage cada vez que cambie
+  // Persistir contador
   useEffect(() => {
-    localStorage.setItem('relatosPapelCart', JSON.stringify(cartItems));
-  }, [cartItems]);
+    localStorage.setItem('relatosPapelCartCount', totalItems);
+  }, [totalItems]);
 
-  // Agregar item al carrito
-  const addToCart = (book, modalidad, cantidad) => {
-    setCartItems(prevItems => {
-      // Verificar si el libro ya existe en el carrito con la misma modalidad
-      const existingItemIndex = prevItems.findIndex(
-        item => item.id_book === book.id_book && item.modalidad === modalidad
-      );
+  useEffect(() => {
+    const cargarTotalDesdeBD = async () => {
+      try {
+        const idUsuario = localStorage.getItem('idUsuarioConectado');
 
-      if (existingItemIndex > -1) {
-        // Si existe, incrementar la cantidad
-        const updatedItems = [...prevItems];
-        updatedItems[existingItemIndex].cantidad += cantidad;
-        return updatedItems;
-      } else {
-        // Si no existe, agregar nuevo item
-        return [...prevItems, { ...book, modalidad, cantidad }];
+        if (!idUsuario) return;
+
+        const total = await CuantosItems(idUsuario);
+
+        if (total !== null) {
+          setTotalItems(Number(total));
+        }
+      } catch (error) {
+        console.error("Error cargando total del carrito:", error);
       }
-    });
-  };
+    };
 
-  // Eliminar item del carrito
-  const removeFromCart = (id_book, modalidad) => {
-    setCartItems(prevItems =>
-      prevItems.filter(item => !(item.id_book === id_book && item.modalidad === modalidad))
-    );
-  };
+    cargarTotalDesdeBD();
+  }, []);
 
-  // Actualizar cantidad de un item
-  const updateQuantity = (id_book, modalidad, cantidad) => {
-    if (cantidad <= 0) {
-      removeFromCart(id_book, modalidad);
-      return;
-    }
-
-    setCartItems(prevItems =>
-      prevItems.map(item =>
-        item.id_book === id_book && item.modalidad === modalidad
-          ? { ...item, cantidad }
-          : item
-      )
-    );
-  };
-
-  // Vaciar carrito
-  const clearCart = () => {
-    setCartItems([]);
+  //Agregar item
+  const addToCart = (cantidad) => {
+    setTotalItems(prev => prev + cantidad);
   };
 
   // Obtener total de items en el carrito
   const getTotalItems = () => {
-    return cartItems.reduce((total, item) => total + item.cantidad, 0);
+    return totalItems;
   };
 
-  // Obtener subtotal del carrito
-  const getSubtotal = () => {
-    return cartItems.reduce((total, item) => total + (item.price * item.cantidad), 0);
+  //Remover item completamente
+  const removeFromCart = (cantidad) => {
+    setTotalItems(prev => Math.max(prev - cantidad, 0));
+  };
+
+  //Cuando se cambia la cantidad manualmente
+  const updateQuantity = (oldCantidad, newCantidad) => {
+    const diferencia = newCantidad - oldCantidad;
+    setTotalItems(prev => Math.max(prev + diferencia, 0));
+  };
+
+  //Vaciar carrito
+  const clearCart = () => {
+    setTotalItems(0);
   };
 
   const value = {
-    cartItems,
+    totalItems,
     addToCart,
     removeFromCart,
     updateQuantity,
-    clearCart,
     getTotalItems,
-    getSubtotal
+    clearCart
   };
 
-  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
+  return (
+    <CartContext.Provider value={value}>
+      {children}
+    </CartContext.Provider>
+  );
 };

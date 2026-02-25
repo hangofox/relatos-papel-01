@@ -13,15 +13,23 @@ import { CategoryCarousel } from './CategoryCarousel';
 
 export const Carrousel = ({ categories }) => {
 
+  const [loading, setLoading] = useState(true);
   const [categoriasFiltradas, setCategoriasFiltradas] = useState([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const data = await Categorias();
-      const catf = data.filter(cat =>
-        categories.includes(Number(cat.idCategoria))
-      );
-      setCategoriasFiltradas(catf);
+      try {
+        const data = await Categorias();
+        const catf = data.filter(cat =>
+          categories.includes(Number(cat.idCategoria))
+        );
+        setCategoriasFiltradas(catf);
+      } catch (error) {
+        console.error(error);
+        setCategoriasFiltradas([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchCategories();
@@ -29,12 +37,25 @@ export const Carrousel = ({ categories }) => {
 
   return (
     <div className="container-fluid text-dark py-5">
-      {categoriasFiltradas.map((cat) => (
-        <CategoryCarousel
-          key={cat.idCategoria}
-          category={cat}
-        />
-      ))}
+      {
+        loading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "250px" }}
+          >
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Cargando...</span>
+            </div>
+          </div>
+        ) : (
+          categoriasFiltradas.map((cat) => (
+            <CategoryCarousel
+              key={cat.idCategoria}
+              category={cat}
+            />
+          ))
+        )
+      }
     </div>
   );
 };

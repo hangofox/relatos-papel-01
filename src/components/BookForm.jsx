@@ -41,16 +41,17 @@ export const BookForm = ({ book }) => {
     const ventaSuccess = await IngresaLibroCarrito(book, 1, cantidad);
 
     if (ventaSuccess) {
-      addToCart(book, modalidad, cantidadNum);
+      addToCart(cantidadNum);
       setError("");
       setSuccess(true);
     } else {
-      setError("Ha ocurrido un error");
+      setError("El libro no tiene stock");
       setSuccess(false);
     }
 
     // Limpiar mensaje de éxito después de 3 segundos
     setTimeout(() => {
+      setError("");
       setSuccess(false);
     }, 3000);
   };

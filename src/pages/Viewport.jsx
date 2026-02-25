@@ -11,8 +11,23 @@ import { Routes, Route } from 'react-router-dom';
 import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCardPage, OrderConfirmationPage, CategoriesPage } from './Pages';
 import { Navbar, Footer, ScrollToTop, LayerWelcome } from '../components/Components';
 import { useState, useEffect } from 'react';
+import { Usuario } from '../services/VentasService';
 export const Viewport = () => {
-  localStorage.setItem('idUsuarioConectado', 1);
+  const idUsuario = 1;
+  localStorage.setItem('idUsuarioConectado', idUsuario);
+
+  useEffect(() =>{
+    const fetchUsuario = async () =>{
+      const usuario = await Usuario(idUsuario);
+      if(usuario !== null){
+        localStorage.setItem('nombreUsuario', usuario.nombreUsuario);
+        localStorage.setItem('apellidoUsuario', usuario.apellidoUsuario);
+        localStorage.setItem('telefonoUsuario', usuario.telefonoUsuario);
+      }
+    }
+    fetchUsuario();
+  });
+
   /*const [pausa, setPausa] = useState(true);
 
   useEffect(() => {
