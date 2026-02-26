@@ -13,12 +13,14 @@ import { Navbar, Footer, ScrollToTop } from '../components/Components';
 import { useEffect } from 'react';
 import { Usuario } from '../services/VentasService';
 export const Viewport = () => {
+  //Se trae el usuario conectado guardado del localstorage
   let idUsuario = localStorage.getItem('idUsuarioConectado');
   if(idUsuario === null || idUsuario === ''){
+    //No se hizo login pero se coloca el código del usuario en el Local Storage para inicializar la variable
     idUsuario = 1;
     localStorage.setItem('idUsuarioConectado', idUsuario);
   }
-
+  //Se traen los datos del usuario conectado
   useEffect(() =>{
     const fetchUsuario = async () =>{
       const usuario = await Usuario(idUsuario);

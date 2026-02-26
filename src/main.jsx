@@ -12,11 +12,11 @@ import { Viewport } from './pages/Viewport'
 import { CartProvider } from './context/CartContext'
 
 createRoot(document.getElementById('root')).render(
-  
+  <StrictMode>
     <CartProvider>
       <BrowserRouter basename='/relatos'>
         <Viewport />
       </BrowserRouter>
     </CartProvider>
-  
+  </StrictMode>,
 )

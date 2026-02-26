@@ -1,6 +1,14 @@
+/**
+ * Creado por: Gabriela Zapata
+ * Fecha: 2026-02-19
+ * Service de ventas y productos facturados
+ */
+
+//Se coloca en una variable la BASE URL y BASE IMG del environment
 const API_URL = import.meta.env.VITE_API_URL;
 const IMG_URL = import.meta.env.VITE_IMG_URL;
 
+//Función que devuelve la venta existente
 const ventaExistente = async (idUsuario) => {
   try {
     const response = await fetch(`${API_URL}payments/ventas/ingresada/usuario/${idUsuario}`);
@@ -22,6 +30,7 @@ const ventaExistente = async (idUsuario) => {
   }
 };
 
+//Función que devuelve la venta existente
 const ventaIngresadaXUsuario = async (idUsuario) => {
   let idVenta;
   let response = await ventaExistente(idUsuario);
@@ -37,6 +46,7 @@ const ventaIngresadaXUsuario = async (idUsuario) => {
   return idVenta;
 };
 
+//Función que crea la venta
 const crearVenta = async (idUsuario) => {
   try {
     const nroOrden1 = numeroRandom(10000, 90000);
@@ -69,6 +79,7 @@ const crearVenta = async (idUsuario) => {
   }
 };
 
+//Función que ingresa el libro al detalle de la venta
 export const IngresaLibroCarrito = async (libro, idUsuario, cantidad) => {
   const idVenta = await ventaIngresadaXUsuario(idUsuario);
 
@@ -101,6 +112,7 @@ export const IngresaLibroCarrito = async (libro, idUsuario, cantidad) => {
 
 };
 
+//Función que retorna la lista todos los ítems del carrito
 export const ListarItemsCarrito = async (idUsuario) => {
   try {
     const venta = await ventaExistente(idUsuario);
@@ -126,6 +138,7 @@ export const ListarItemsCarrito = async (idUsuario) => {
 
 };
 
+//Función que trae cuántos ítems tiene la venta por usuario
 export const CuantosItems = async (idUsuario) => {
   try {
     const response = await fetch(`${API_URL}payments/ventas/cuantositems/usuario/${idUsuario}`);
@@ -143,6 +156,7 @@ export const CuantosItems = async (idUsuario) => {
   }
 };
 
+//Función que retorna los datos del usuario
 export const Usuario = async (idUsuario) => {
   try {
     const response = await fetch(`${API_URL}payments/usuarios/${idUsuario}`);
@@ -160,6 +174,7 @@ export const Usuario = async (idUsuario) => {
 
 };
 
+//Función que actualiza la cantidad de cada ítem
 export const ActualizaCantidad = async (idProductoFacturado, cantidad) => {
   try {
 
@@ -183,6 +198,7 @@ export const ActualizaCantidad = async (idProductoFacturado, cantidad) => {
   }
 };
 
+//Función que elimina el producto del carrito
 export const EliminaProducto = async (idProductoFacturado) => {
   try {
     const response = await fetch(`${API_URL}payments/productos/${idProductoFacturado}`, {
@@ -202,6 +218,7 @@ export const EliminaProducto = async (idProductoFacturado) => {
   }
 };
 
+//Función que marca la venta como pagada
 export const ActualizaEstadoVenta = async (idUsuario) => {
   try {
     const venta = await ventaExistente(idUsuario);
@@ -228,6 +245,7 @@ export const ActualizaEstadoVenta = async (idUsuario) => {
   }
 };
 
+//Función para obtener un número randómico para el número de orden
 const numeroRandom = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
