@@ -13,10 +13,10 @@ import { IngresaLibroCarrito } from '../services/VentasService';
 
 export const BookForm = ({ book }) => {
   //State para inicializar la modalidad
-  const [modalidad, setModalidad] = useState("");
+  //const [modalidad, setModalidad] = useState("");
   //State para inicializar la cantidad
   const [cantidad, setCantidad] = useState(1);
-  //State para mostrar error de modalidad
+  //State para mostrar error
   const [error, setError] = useState("");
   //State para mostrar mensaje de éxito
   const [success, setSuccess] = useState(false);
@@ -27,11 +27,11 @@ export const BookForm = ({ book }) => {
   const handleAddToCart = async () => {
     const idUsuario = localStorage.getItem('idUsuarioConectado');
 
-    if (!modalidad) {
+    /*if (!modalidad) {
       setError("Error seleccione modalidad");
       setSuccess(false);
       return;
-    }
+    }*/
 
     const cantidadNum = parseInt(cantidad);
     if (cantidadNum <= 0) {
@@ -61,7 +61,8 @@ export const BookForm = ({ book }) => {
   return (
     <>
       <div className='row container-fluid'>
-        <div className='col-lg-3 text-end'>
+        <input type="hidden" name="id_modalidad" value="F" />
+        {/* <div className='col-lg-3 text-end'>
           <label htmlFor="id_modalidad">Modalidad:</label>
         </div>
         <div className="col-lg-3">
@@ -79,7 +80,7 @@ export const BookForm = ({ book }) => {
             <option value="F">Físico</option>
             <option value="D">Digital</option>
           </select>
-        </div>
+        </div> */}
         <div className="col-lg-3 text-end">
           <label htmlFor="cantidad">Cantidad:</label>
         </div>

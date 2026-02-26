@@ -13,7 +13,7 @@ import { useCart } from '../context/CartContext';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 // Importaciones de React-Bootstrap
-import { Navbar as RBNavbar, Nav, NavDropdown, Container, Form, Button, Badge } from 'react-bootstrap';
+import { Navbar as RBNavbar, Nav, NavDropdown, Container, Form, Badge } from 'react-bootstrap';
 import { Categorias } from '../services/CategoriasService';
 
 export const Navbar = () => {
@@ -61,7 +61,7 @@ export const Navbar = () => {
         </RBNavbar.Brand>
 
         {/* CONTENEDOR DE ICONOS PARA MÓVIL (Orden visual) */}
-        <div className="d-flex align-items-center order-lg-last">
+        <div className="d-flex align-items-center order-lg-last ms-4">
           {/* 2. Carrito (FUERA del Collapse) */}
           <Nav.Link
             as={Link}
@@ -80,19 +80,6 @@ export const Navbar = () => {
               </Badge>
             )}
           </Nav.Link>
-
-          <Nav.Item>
-            <div className='text-center'>
-              <i className="bi bi-person nav-ico"></i>
-            </div>
-            <div className='text-center'>
-              <small>
-                {
-                  localStorage.getItem("nombreUsuario") + ' ' + localStorage.getItem("apellidoUsuario")
-                }
-              </small>
-            </div>
-          </Nav.Item>
 
           {/* 3. Botón hamburguesa */}
           <RBNavbar.Toggle aria-controls="navbarSupportedContent" />
@@ -136,10 +123,15 @@ export const Navbar = () => {
                 </NavDropdown.Item>
               ))}
             </NavDropdown>
-
-
-
           </Nav>
+          <Nav.Link as={Link} to="/choose-user">
+            <div className='text-center'>
+                <i className="bi bi-person nav-ico"></i>
+                {
+                  localStorage.getItem("nombreUsuario") + ' ' + localStorage.getItem("apellidoUsuario")
+                }
+            </div>
+          </Nav.Link>
         </RBNavbar.Collapse>
       </Container>
     </RBNavbar>

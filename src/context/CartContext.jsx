@@ -23,6 +23,18 @@ export const CartProvider = ({ children }) => {
   const idUsuario = localStorage.getItem("idUsuarioConectado");
   const [cartItems, setCartItems] = useState([]);
 
+  useEffect(() => {
+    const inicializarCarrito = async () => {
+      try {
+        await refrescarCarrito();
+      } catch (error) {
+        console.error("Error inicializando carrito:", error);
+      }
+    };
+
+    inicializarCarrito();
+  }, []);
+
   const refrescarCarrito = async () => {
     const data = await ListarItemsCarrito(idUsuario)
     setCartItems(data);
@@ -30,7 +42,7 @@ export const CartProvider = ({ children }) => {
 
   // Agregar item al carrito
   const addToCart = (cantidad) => {
-    
+
   };
 
   // Eliminar item del carrito
@@ -52,13 +64,13 @@ export const CartProvider = ({ children }) => {
 
   // Obtener total de items en el carrito
   const getTotalItems = () => {
-    if(!cartItems) return 0;
+    if (!cartItems) return 0;
     return cartItems.reduce((total, item) => total + item.cantidadItem, 0);
   };
 
   // Obtener subtotal del carrito
   const getSubtotal = () => {
-    if(!cartItems) return 0;
+    if (!cartItems) return 0;
     return cartItems.reduce((total, item) => total + (item.precioUnitarioLibro * item.cantidadItem), 0);
   };
 

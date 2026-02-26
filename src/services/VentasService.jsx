@@ -10,53 +10,70 @@ const ventaExistente = async (idUsuario) => {
       return null;
     }
 
-    return venta;
+    if(response.status === 200){
+      return venta;
+    }
+
+    return null;    
 
   } catch (error) {
-    console.log(error);
+    console.log('Venta no existe');
     return null;
   }
 };
 
 const ventaIngresadaXUsuario = async (idUsuario) => {
-  try {
-    let venta = await ventaExistente(idUsuario);
+  let idVenta;
+  let response = await ventaExistente(idUsuario);
 
-    if (venta === null) {
-      venta = await crearVenta(idUsuario);
+  if (response === null) {
+    response = await crearVenta(idUsuario);
+    if (response !== null || response.status === 200) {
+      idVenta = response.idCreated;
     }
-
-    return venta.idVenta;
-
-  } catch (error) {
-    console.log(error);
-    return null;
+  } else {
+    idVenta = response.idVenta;
   }
+  return idVenta;
 };
 
 const crearVenta = async (idUsuario) => {
-  const res = await fetch(`${API_URL}payments/ventas`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      "idUsuario": idUsuario,
-      "numeroOrden": "457878",
-      "costoEnvio": 0,
-      "estadoVenta": "INGRESADA"
-    })
-  });
+  try {
+    const nroOrden1 = numeroRandom(10000, 90000);
+    const nroOrden2 = numeroRandom(3525, 9810);
+    const response = await fetch(`${API_URL}payments/ventas`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        "idUsuario": idUsuario,
+        "numeroOrden": nroOrden1 + '-' + nroOrden2,
+        "costoEnvio": 0,
+        "estadoVenta": "INGRESADA"
+      })
+    });
 
-  if (!res.ok) {
-    throw new Error(res.message);
+    console.log(response.status);
+
+    if (!response.ok) {
+      console.log('Error al crear una venta' + response.message);
+      return null;
+    }
+
+    const venta = await response.json();
+
+    return venta;
+
+  } catch (error) {
+    console.log('No se pudo crear la venta');
+    return null;
   }
-
-  return res.json();
 };
 
 export const IngresaLibroCarrito = async (libro, idUsuario, cantidad) => {
   const idVenta = await ventaIngresadaXUsuario(idUsuario);
 
   if (idVenta) {
+    console.log("Si hay venta, procede a crear producto" + idVenta);
     const res = await fetch(`${API_URL}payments/productos`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -73,19 +90,22 @@ export const IngresaLibroCarrito = async (libro, idUsuario, cantidad) => {
     });
 
     if (!res.ok) {
+      console.log('No se pudo crear producto 😭');
       return false;
     }
+    return true;
+  } else {
+    console.log('No se pudo crear la venta 😭');
+    return false;
   }
-
-  return true;
 
 };
 
 export const ListarItemsCarrito = async (idUsuario) => {
   try {
-    const idVenta = await ventaIngresadaXUsuario(idUsuario);
-    if (idVenta) {
-      const response = await fetch(`${API_URL}payments/productos/${idVenta}`);
+    const venta = await ventaExistente(idUsuario);
+    if (venta !== null) {
+      const response = await fetch(`${API_URL}payments/productos/${venta.idVenta}`);
       if (response.ok) {
         const detalles = await response.json();
         if (detalles) {
@@ -99,7 +119,7 @@ export const ListarItemsCarrito = async (idUsuario) => {
     }
     return [];
   } catch (error) {
-    console.log(error);
+    console.log("Error listar ítems carrito " + error);
     return [];
   }
 
@@ -118,7 +138,7 @@ export const CuantosItems = async (idUsuario) => {
     return cuantos;
 
   } catch (error) {
-    console.log(error);
+    console.log("Error al sacar cuantos ítems " + error);
     return null;
   }
 };
@@ -134,7 +154,7 @@ export const Usuario = async (idUsuario) => {
     return usuario;
 
   } catch (error) {
-    console.log(error);
+    console.log("Error al sacar info del usuario " + error);
     return null;
   }
 
@@ -158,7 +178,7 @@ export const ActualizaCantidad = async (idProductoFacturado, cantidad) => {
     return false;
 
   } catch (error) {
-    console.log(error);
+    console.log("Error al actualizar la cantidad " + error);
     return false;
   }
 };
@@ -177,7 +197,7 @@ export const EliminaProducto = async (idProductoFacturado) => {
     return false;
 
   } catch (error) {
-    console.log(error);
+    console.log("Error al eliminar " + error);
     return false;
   }
 };
@@ -203,7 +223,11 @@ export const ActualizaEstadoVenta = async (idUsuario) => {
     return false;
 
   } catch (error) {
-    console.log(error);
+    console.log("Error al actualizar la venta " + error);
     return false;
   }
+};
+
+const numeroRandom = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };

@@ -88,8 +88,9 @@ export const BuscarLibros = async (searchText) => {
 };
 
 export const LibrosPorCategoria = async (idCategoria) => {
-  try {
-    const response = await fetch(`${API_URL}catalogue/librosxcategorias/categoria/${idCategoria}`);
+  const response = await fetch(`${API_URL}catalogue/librosxcategorias/categoria/${idCategoria}`);
+  console.log(response.status);
+  if (response.status === 200) {
     const data = await response.json();
 
     const dataMap = data.librosxCategoriasDTO
@@ -98,9 +99,8 @@ export const LibrosPorCategoria = async (idCategoria) => {
       .map(libro => transformaLibro(libro));
 
     return dataMap;
-
-  } catch (error) {
-    console.log(error);
-    return [];
   }
+
+  return [];
+
 };

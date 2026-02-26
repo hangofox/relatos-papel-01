@@ -8,6 +8,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { ActualizaEstadoVenta } from '../services/VentasService';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export const CreditCard = () => {
@@ -43,7 +44,7 @@ export const CreditCard = () => {
 
     //Mastercard: comienza con 51-55 o 2221-2720
     if (/^5[1-5]/.test(cleanNumber) || /^2(22[1-9]|2[3-9][0-9]|[3-6][0-9]{2}|7[0-1][0-9]|720)/.test(cleanNumber)) {
-       return 'mastercard';
+      return 'mastercard';
     }
 
     // American Express: comienza con 34 o 37
@@ -211,7 +212,7 @@ export const CreditCard = () => {
   };
 
   // Manejar envío del formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validar todos los campos
@@ -229,8 +230,17 @@ export const CreditCard = () => {
       return;
     }
 
-    // Si todo es válido, procesar el pago
-    navigate('/order-confirmation');
+    //Si está todo bien cambia estado de la venta
+    const idUsuario = localStorage.getItem("idUsuarioConectado");
+    //Cambia la venta a pagada
+    const exito = await ActualizaEstadoVenta(idUsuario);
+    if (exito) {
+      // Si todo es válido, procesar el pago
+      navigate('/order-confirmation');
+    } else {
+      alert("Error al procesar el pago.");
+    }
+
   };
 
   return (

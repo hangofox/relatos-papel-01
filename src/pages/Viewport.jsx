@@ -8,13 +8,16 @@
  */
 
 import { Routes, Route } from 'react-router-dom';
-import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCardPage, OrderConfirmationPage, CategoriesPage } from './Pages';
-import { Navbar, Footer, ScrollToTop, LayerWelcome } from '../components/Components';
-import { useState, useEffect } from 'react';
+import { Home, Search, BookPage, ShoppingCartPage, PaymentMethodPage, CreditCardPage, OrderConfirmationPage, CategoriesPage, EscogerUsuarioPage } from './Pages';
+import { Navbar, Footer, ScrollToTop } from '../components/Components';
+import { useEffect } from 'react';
 import { Usuario } from '../services/VentasService';
 export const Viewport = () => {
-  const idUsuario = 1;
-  localStorage.setItem('idUsuarioConectado', idUsuario);
+  let idUsuario = localStorage.getItem('idUsuarioConectado');
+  if(idUsuario === null || idUsuario === ''){
+    idUsuario = 1;
+    localStorage.setItem('idUsuarioConectado', idUsuario);
+  }
 
   useEffect(() =>{
     const fetchUsuario = async () =>{
@@ -62,6 +65,7 @@ export const Viewport = () => {
           <Route path="/payment-method" element={<PaymentMethodPage />} />
           <Route path="/credit-card-payment" element={<CreditCardPage />} />
           <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
+          <Route path="/choose-user" element={<EscogerUsuarioPage />} />
           {/* Ruta por defecto si el usuario se pierde */}
           <Route path="*" element={<h1>404 - No encontrado</h1>} />
         </Routes>

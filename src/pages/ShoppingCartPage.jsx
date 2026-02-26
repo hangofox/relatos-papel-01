@@ -14,11 +14,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 export const ShoppingCartPage = () => {
   const navigate = useNavigate();
   const { cartItems, getSubtotal, getTotalItems, refrescarCarrito } = useCart();
-
-  useEffect(() => {
-    refrescarCarrito();
-  }, []);
-
   const subtotal = getSubtotal();
   const envio = subtotal > 0 ? (subtotal >= 50 ? 0 : 5) : 0; // Envío gratis si el subtotal es mayor o igual a $50
   const total = subtotal + envio;

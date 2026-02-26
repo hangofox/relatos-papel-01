@@ -13,3 +13,4 @@ export * from './CategoriesPage';
 export * from './PaymentMethodPage';
 export * from './CreditCardPage';
 export * from './OrderConfirmationPage';
+export * from './EscogerUsuarioPage';

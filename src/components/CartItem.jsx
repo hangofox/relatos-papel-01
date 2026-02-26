@@ -34,12 +34,6 @@ export const CartItem = ({ item }) => {
       </div>
       <div className="col-lg-3 col-md-4 col-8">
         <h6 className="mb-1">{item.tituloLibro}</h6>
-        <small>{ item.idProductoFacturado }</small>
-        <div className="mt-1">
-          <span className="badge bg-secondary">
-            {item.modalidad === 'F' ? 'Físico' : 'Digital'}
-          </span>
-        </div>
       </div>
       <div className="col-lg-2 col-md-2 col-4 text-center">
         <strong>${item.precioUnitarioLibro}</strong>
